@@ -7,13 +7,15 @@
           finished-text="没有更多了"
           @load="onLoad"
       >
-        <van-cell v-for="item in list" :key="item" :title="item"/>
+        <van-cell v-for="(item,index) in list" :key="item" :title="item" @click="songUrl(songs[index].id)"/>
       </van-list>
     </van-pull-refresh>
   </div>
 </template>
 
 <script>
+import {getSongDetail,getIsSong} from "network/song";
+
 export default {
   name: "SongList",
   data() {
@@ -22,13 +24,14 @@ export default {
       loading: false,
       finished: false,
       refreshing: false,
+      listPage: 1
     };
   },
-  props:{
-    songs:{
-      type:Array,
-      default: {
-        return:[]
+  props: {
+    songs: {
+      type: Array,
+      default() {
+        return []
       }
     }
   },
@@ -40,12 +43,17 @@ export default {
           this.refreshing = false;
         }
 
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
+        for (let i = 0; i < 30; i++) {
+          getIsSong(this.songs[i].id).then(res=>{
+            console.log(res.success)
+            if(res.success){
+              this.list.push(this.songs[i].id+'++'+this.songs[i].name + '--' + this.songs[i].artists[0].name)
+            }
+          })
         }
         this.loading = false;
 
-        if (this.list.length >= 40) {
+        if (this.list.length >= this.songs.length) {
           this.finished = true;
         }
       }, 1000);
@@ -59,6 +67,14 @@ export default {
       this.loading = true;
       this.onLoad();
     },
+    songUrl(id){
+      getSongDetail(id).then(res=>{
+        console.log(res.data[0])
+
+        this.$store.state.musicSrc.src = res.data[0].url
+      })
+
+    }
   },
 }
 </script>

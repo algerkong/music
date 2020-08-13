@@ -1,0 +1,34 @@
+@import "./normalize.css";
+
+.van-image {
+    vertical-align: bottom;
+}
+
+span.van-progress__pivot {
+    min-width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    line-height: 0;
+}
+
+.van-slider__button {
+  background-color: #333333 !important;
+}
+
+
+.van-grid-item__content {
+  padding: 16px 5px 0 !important;
+}
+
+.van-hairline--top::after {
+    border-top-width: 0;
+}
+
+div {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}

@@ -1,8 +1,10 @@
 import axios from 'axios'
+import baseUrl from "common/const";
 
 export function request(config,success, failure){
   const instance = axios.create({
-    baseURL:'https://autumnfish.cn',
+    // baseURL:'https://autumnfish.cn',
+    baseURL:baseUrl,
     timeout:5000
   })
   

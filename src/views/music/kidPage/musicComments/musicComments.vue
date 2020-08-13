@@ -32,7 +32,7 @@
               finished-text="没有更多了"
               @load="onLoad"
           >
-            <van-cell v-for="(item,index) in comments" :key="index">
+            <van-cell v-for="(item,index) in comments" :key="index*(page+1)">
               <comment-item :comment="item"/>
             </van-cell>
           </van-list>
@@ -71,11 +71,11 @@ export default {
     },
     onLoad() {
       const state = this.$store.state
-      getSongComments(state.musicSrc.id, 20, this.page).then(res => {
+      getSongComments(state.musicSrc.id, 30, this.page).then(res => {
         console.log(res)
         this.comments.push.apply(this.comments, res.comments)
+        console.log(this.comments)
         this.allCommentCount = res.total
-        this.page++
 
         this.loading = false;
 
@@ -83,7 +83,7 @@ export default {
           this.finished = true;
         }
       })
-
+      this.page++
     },
 
 
@@ -106,6 +106,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 10px 16px;
+  border-bottom: 5px solid #eeeeee;
 }
 
 .music-page > .img-page {
@@ -122,9 +123,8 @@ export default {
 
 .title {
   width: 100%;
-  height: 30px;
   background-color: #ffffff;
-  padding: 0 16px;
+  padding: 10px 16px;
   font-weight: 600;
 }
 </style>
