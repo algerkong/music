@@ -1,19 +1,22 @@
 <template>
   <div class="home">
-<!--    轮播图-->
+    <!--    轮播图-->
     <div class="banner-page" v-if="banners">
       <div class="banner">
         <van-swipe class="my-swipe" :autoplay="3000" indicator-color="rgb(238, 10, 36)">
           <van-swipe-item v-for="item in banners">
-            <van-image :src="item.pic"/>
+            <vue-lazy-component tagName="div">
+              <van-image :src="item.pic"/>
+            </vue-lazy-component>
+
           </van-swipe-item>
         </van-swipe>
       </div>
     </div>
 
-<!--歌单推荐-->
+    <!--歌单推荐-->
     <div v-if="homePlaylist">
-      <div class="list-top" >
+      <div class="list-top">
         <div class="play-list-title">
           {{ playlistTitle }}
         </div>
@@ -28,9 +31,9 @@
       </van-grid>
     </div>
 
-<!--歌曲推荐-->
+    <!--歌曲推荐-->
     <div v-if="homeSongsList">
-      <div class="list-top" >
+      <div class="list-top">
         <div class="play-list-title">
           {{ songsListTitle }}
         </div>
@@ -41,7 +44,7 @@
       <song-recommended :list="homeSongsList"/>
     </div>
 
-<!--    时间歌单推荐-->
+    <!--    时间歌单推荐-->
     <div v-if="scenarioList">
       <div class="list-top">
         <div class="play-list-title">
@@ -58,7 +61,7 @@
       </van-grid>
     </div>
 
-<!--    新歌推荐-->
+    <!--    新歌推荐-->
     <div v-if="newSongList">
       <div class="list-top">
         <div class="play-list-title">
@@ -108,12 +111,12 @@ export default {
       homePlaylist: [],
       songsListTitle: '',
       homeSongsList: [],
-      scenarioTitle:'',
-      scenarioList:[],
-      newSongTitle:'',
-      newSongList:[],
-      everyonePlayTitle:'',
-      everyonePlayList:[]
+      scenarioTitle: '',
+      scenarioList: [],
+      newSongTitle: '',
+      newSongList: [],
+      everyonePlayTitle: '',
+      everyonePlayList: []
     }
   },
   created() {

@@ -1,35 +1,38 @@
 <template>
-  <form action="/" class="page">
-    <van-search
-        v-model="value"
-        show-action
-        placeholder="请输入搜索关键词"
-        @search="onSearch"
-        shape="round"
-        @click="searchClick"
-    >
-      <template #left>
-        <div class="img-page" @click="myClick">
-          <van-image
-              width="33px"
-              height="33px"
-              round
-              fit="cover"
-              :src="imgUrl"
-          />
-        </div>
-      </template>
-      <template #action>
-        <div class="set-page">
-          <van-icon
-              size="25px"
-              color="#a39b9b"
-              name="setting-o"/>
-        </div>
-      </template>
-    </van-search>
+  <div>
+    <form action="/" class="page">
+      <van-search
+          v-model="value"
+          show-action
+          placeholder="请输入搜索关键词"
+          @search="onSearch"
+          shape="round"
+          @click="searchClick"
+      >
+        <template #left>
+          <div class="img-page" @click="myClick">
+            <van-image
+                width="33px"
+                height="33px"
+                round
+                fit="cover"
+                :src="imgUrl"
+            />
+          </div>
+        </template>
+        <template #action>
+          <div class="set-page" @click="showSet">
+            <van-icon
+                size="25px"
+                color="#a39b9b"
+                name="setting-o"/>
+          </div>
+        </template>
+      </van-search>
 
-  </form>
+    </form>
+    <div class="holder"></div>
+  </div>
 </template>
 
 <script>
@@ -41,7 +44,7 @@ export default {
   data() {
     return {
       value: '',
-      imgUrl:'https://img.yzcdn.cn/vant/cat.jpeg'
+      imgUrl: 'https://img.yzcdn.cn/vant/cat.jpeg'
     };
   },
   created() {
@@ -54,19 +57,33 @@ export default {
     onSearch(val) {
       Toast(val);
     },
-    searchClick(){
+    searchClick() {
       // this.$store.state.isBar = false
       this.$store.state.isSearchPop = true
       this.$router.push('/search')
     },
-    myClick(){
+    myClick() {
       this.$emit('my-click')
+    },
+    showSet(){
+      Toast('还没做')
     }
   },
 }
 </script>
 
 <style scoped>
+.holder {
+  height: 54px;
+}
+
+.page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+}
 
 .van-search__content {
   background-color: #f3f3f3;
@@ -89,6 +106,6 @@ export default {
 }
 
 .van-image--round {
-    border: 1px solid #dedede;
+  border: 1px solid #dedede;
 }
 </style>

@@ -155,7 +155,7 @@ export default {
     showText() {
       this.isText = !this.isText
     },
-    showComment(){
+    showComment() {
       this.$store.state.isComment = true
       console.log('11111111111111')
       this.$router.push('/comment')
@@ -168,6 +168,7 @@ export default {
       this.isHistory = true
     },
     showAuthor() {
+      this.$store.state.isSinger = true
       this.$router.push('/singer')
     },
     sliderChange(value) {

@@ -17,9 +17,9 @@
       <van-form class="top-content">
         <div>{{ briefDesc }}</div>
       </van-form>
-      <van-sticky :offset-top="200">
-        <van-button type="info">吸顶距离</van-button>
-      </van-sticky>
+<!--      <van-sticky :offset-top="200">-->
+<!--        <van-button type="info">吸顶距离</van-button>-->
+<!--      </van-sticky>-->
     </van-popup>
   </div>
 </template>
@@ -52,7 +52,7 @@ export default {
 
 <style scoped>
 .top-content {
-  padding-top: 100px;
+  padding:10px 16px;
 }
 
 .img-color {

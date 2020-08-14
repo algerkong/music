@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <search-bar v-if="$store.state.isBar" @my-click="myClick"/>
-    <tab-bar v-if="$store.state.isBar"></tab-bar>
+<!--    <tab-bar v-if="$store.state.isBar"></tab-bar>-->
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive"/>
     </keep-alive>

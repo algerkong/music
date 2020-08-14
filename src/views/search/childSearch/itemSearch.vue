@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <div class="song-mv" >
+    <div class="song-mv">
       <van-icon name="play-circle-o" size="25" color="#6f6f6f" v-if="songDetail.mvID" @click="showMv"/>
     </div>
     <div class="song-set">
@@ -47,7 +47,7 @@ export default {
         arID: this.song.ar[0].id,
         alia: this.song.alia,
         songImg: this.song.al.picUrl,
-        mvID:''
+        mvID: ''
 
       }
     }
@@ -85,7 +85,7 @@ export default {
       })
     },
 
-    showMv(){
+    showMv() {
       console.log('11111111')
       this.$store.state.isMv = true
       this.$store.state.mvID = this.songDetail.mvID
