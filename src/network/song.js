@@ -93,6 +93,18 @@ return request({
   })
 }
 
+//MV评论
+export function getMvComments(id,limit,offset) {
+  return request({
+    url: '/comment/mv',
+    params: {
+      id,
+      limit,
+      offset
+    }
+  })
+}
+
 
 //歌曲详情
 export class Songs {

@@ -83,11 +83,6 @@
       </div>
       <song-recommended :list="everyonePlayList"/>
     </div>
-
-
-    <h1>home</h1>
-    <!--    <music-comments/>-->
-    <!--    <song-list :songs="newSongs"/>-->
   </div>
 </template>
 

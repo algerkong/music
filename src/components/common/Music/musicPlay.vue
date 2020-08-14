@@ -34,15 +34,15 @@ export default {
     '$store.state.musicSrc': function () {
       this.onAudio()
     },
-    '$store.state.musicSrc.isPlay': function (val, old) {
+    '$store.state.musicSrc.isPlay': function () {
       let audio = this.$refs.audio
       this.onAudio()
-      if (this.$store.state.musicSrc.isPlay === true) {
+      if (this.$store.state.musicSrc.isPlay) {
         audio.play()
       } else {
         audio.pause();
       }
-    }
+    },
   },
   created() {
     setInterval(this.onAudio, 500)
@@ -80,15 +80,15 @@ export default {
     //获取播放时间
     onAudio() {
       let audio = this.$refs.audio
-      let _this = this;
+      let state = this.$store.state;
       if (this.$store.state.musicSrc.isPlay) {
-        _this.$store.state.audio = audio
+        state.audio = audio
         audio.addEventListener("timeupdate", function () {//监听音频播放的实时时间事件
           let timeDisplay;
           //用秒数来显示当前播放进度
-          _this.$store.state.newTime = audio.currentTime
+          state.newTime = audio.currentTime
 
-          // console.log(_this.$store.state.newTime);
+          // console.log(state.newTime);
           timeDisplay = Math.floor(audio.currentTime);//获取实时时间
           // console.log(timeDisplay)
           //处理时间
@@ -104,13 +104,13 @@ export default {
           if (seconds < 10) {
             seconds = "0" + seconds;
           }
-          _this.$store.state.realMusicTime = minutes + ":" + seconds + "." + audio.currentTime.toString().replace(/\d+\.(\d*)/, "$1");//将实时时间存储到vuex中
+          state.realMusicTime = minutes + ":" + seconds + "." + audio.currentTime.toString().replace(/\d+\.(\d*)/, "$1");//将实时时间存储到vuex中
           if (audio.currentTime === audio.duration) {
-            _this.$store.state.musicSrc.isPlay = false
+            state.musicSrc.isPlay = false
           }
         }, false);
       }
-      this.$store.state.allTime = audio.duration
+      state.allTime = audio.duration
     }
   }
 }

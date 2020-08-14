@@ -8,6 +8,7 @@
         {{ name }}
       </div>
       <div>
+        <span class="like-count">{{likeCount}}</span>
         <van-icon name="good-job-o" size="25px" color="#6f6f6f" @click="isGoodClick"/>
       </div>
     </div>
@@ -30,6 +31,7 @@ export default {
       userID: '',
       content: '',
       commentID: '',
+      likeCount:'',
       isT: 0
     }
   },
@@ -47,6 +49,7 @@ export default {
     this.userID = this.comment.user.userId
     this.content = this.comment.content
     this.commentID = this.comment.commentId
+    this.likeCount = this.comment.likedCount
   },
   methods: {
     isGoodClick() {
@@ -82,5 +85,11 @@ export default {
   padding-left: 60px;
   padding-right: 10px;
   line-height: 25px;
+}
+
+.like-count{
+  font-size: 14px;
+  padding: 0 5px;
+  color: #6f6f6f;
 }
 </style>

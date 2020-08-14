@@ -1,20 +1,26 @@
 <template>
   <div class="singer-page">
-    <top-bar :title="name"/>
-    <van-image
-        width="100%"
-        height="100%"
-        fit="contain"
-        :src="imgUrl"
-        class="img-color"
-    />
-    <singer-bar/>
-    <van-form class="top-content">
-      <div>{{ briefDesc }}</div>
-    </van-form>
-    <van-sticky :offset-top="200">
-      <van-button type="info">吸顶距离</van-button>
-    </van-sticky>
+    <van-popup
+        class="mv-page"
+        v-model="$store.state.isSinger"
+        duration="0.2"
+        position="bottom"
+        :style="{ height: '100%' }"
+    >
+      <top-bar :title="name"/>
+      <van-image
+          fit="contain"
+          :src="imgUrl"
+          class="img-color"
+      />
+      <singer-bar/>
+      <van-form class="top-content">
+        <div>{{ briefDesc }}</div>
+      </van-form>
+      <van-sticky :offset-top="200">
+        <van-button type="info">吸顶距离</van-button>
+      </van-sticky>
+    </van-popup>
   </div>
 </template>
 
@@ -48,11 +54,8 @@ export default {
 .top-content {
   padding-top: 100px;
 }
-.img-color{
-  filter:brightness(0.8)
-}
-.singer-page{
-  position: relative;
-  z-index: 2000;
+
+.img-color {
+  filter: brightness(0.8)
 }
 </style>

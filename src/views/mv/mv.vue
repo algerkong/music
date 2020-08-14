@@ -1,45 +1,207 @@
 <template>
   <div>
-    <video class="mv-video" controls autoplay :src="mvSrc"></video>
-    <div>
-      <p><span>{{mvName}}</span>{{author}}<span></span></p>
-    </div>
-    <div><p>{{text}}</p></div>
+    <van-popup
+        class="mv-page"
+        v-model="$store.state.isMv"
+        duration="0.2"
+        position="bottom"
+        :style="{ height: '100%' }"
+    >
+      <top-bar :title="mvName"/>
+      <div class="video-page">
+        <video class="mv-video"
+               controls
+               autoplay
+               :src="mvSrc"
+               :poster="mvBackground"
+        ></video>
+      </div>
+      <div class="content"></div>
+
+
+      <van-form>
+        <van-collapse v-model="activeNames">
+          <van-collapse-item name="1">
+            <template #title>
+              <div class="mv-title">
+                <p>
+                  <span class="name">{{ mvName }}</span>
+                  <span @click="showSinger"> - {{ author }}</span></p>
+              </div>
+              <div class="mv-count">
+                <span>{{ playCount }}次观看</span>
+              </div>
+            </template>
+            <div class="mv-describe">
+              <p>{{ mvTime }} 发布</p>
+              <p>{{ text }}</p>
+              <p>{{ desc }}</p>
+            </div>
+          </van-collapse-item>
+        </van-collapse>
+        <van-grid>
+          <van-grid-item icon="good-job-o" :text="allCommentCount.toString()"/>
+          <van-grid-item icon="star-o" :text="count.subCount.toString()"/>
+          <van-grid-item icon="chat-o" :text="count.commentCount.toString()"/>
+          <van-grid-item icon="share" :text="count.shareCount.toString()"/>
+        </van-grid>
+
+        <div>
+          <van-sticky offset-top="232px">
+            <div class="title"><p>评论区</p></div>
+          </van-sticky>
+          <van-list
+              v-model="loading"
+              :finished="finished"
+              finished-text="没有更多了"
+              @load="onLoad"
+          >
+            <van-cell v-for="(item,index) in comments" :key="index*(page+1)">
+              <comment-item :comment="item"/>
+            </van-cell>
+          </van-list>
+
+        </div>
+      </van-form>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import {getMv,getMvDetail} from "network/song";
+import {getMv, getMvDetail, getMvComments} from "network/song";
+import TopBar from "components/common/TabBar/topBar";
+import CommentItem from "components/common/CommontItem/commentItem";
 
 export default {
   name: "mv",
-  data(){
-    return{
-      mvSrc:'',
-      mvName:'',
-      author:'',
-      text:''
+  components: {CommentItem, TopBar},
+  data() {
+    return {
+      activeNames: ['0'],
+      loading: false,
+      finished: false,
+      page: 0,
+      comments: [],
+      allCommentCount: '',
+      mvSrc: '',
+      mvBackground: '',
+      mvName: '',
+      author: '',
+      text: '',
+      playCount: '',
+      arID: '',
+      mvTime: '',
+      desc: '',
+      count: {
+        subCount: '',
+        commentCount: '',
+        shareCount: '',
+      }
     }
   },
   created() {
-    getMv(this.$store.state.mvID).then(res=>{
-      console.log(this.$store.state.mvID)
+    //打开时暂停播放音乐
+    const state = this.$store.state
+    state.musicSrc.isPlay = false
+    //获取mv播放地址
+    getMv(state.mvID).then(res => {
+      console.log(state.mvID)
       console.log(res)
       this.mvSrc = res.data.url
     })
-    getMvDetail(this.$store.state.mvID).then(res=>{
+
+    //获取MV信息
+    getMvDetail(state.mvID).then(res => {
       console.log(res)
+      this.mvBackground = res.data.cover
       this.mvName = res.data.name
       this.author = res.data.artistName
+      this.playCount = res.data.playCount
       this.text = res.data.briefDesc
-
+      this.arID = res.data.artistId
+      this.mvTime = res.data.publishTime
+      this.desc = res.data.desc
+      this.count = {
+        subCount: res.data.subCount,
+        commentCount: res.data.commentCount,
+        shareCount: res.data.shareCount,
+      }
     })
+    setTimeout(() => {
+      console.log(state.isMv)
+    }, 2000)
+  },
+  methods: {
+    showSinger() {
+      this.$store.state.arID = this.arID
+      this.$store.state.isSinger = true
+      this.$router.push('/singer')
+    },
+    onLoad() {
+      const state = this.$store.state
+      getMvComments(state.mvID, 30, this.page).then(res => {
+        console.log(res)
+        if(!this.page){
+          this.comments.push.apply(this.comments, res.hotComments)
+        }
+        this.comments.push.apply(this.comments, res.comments)
+        console.log(this.comments)
+        this.allCommentCount = res.total
+
+        this.loading = false;
+
+        if (this.comments.length >= this.allCommentCount) {
+          this.finished = true;
+        }
+        this.page++
+      })
+
+    },
   }
 }
 </script>
 
 <style scoped>
-.mv-video{
+.video-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+
+.content {
+  padding-top: 232px;
+}
+
+.title {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 10px 16px;
+  font-weight: 600;
+}
+
+.mv-video {
   width: 100vw;
+  height: 232px;
+  background-color: #000000;
+}
+
+.mv-title {
+  color: #6f6f6f;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333333;
+}
+
+.mv-count {
+  font-size: 14px;
+  color: #6f6f6f;
+}
+
+.mv-describe {
+  color: #6f6f6f;
 }
 </style>

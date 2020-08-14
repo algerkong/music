@@ -77,7 +77,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
-  // mode: 'history'
+  mode: 'history'
 })
 
 const originalPush = VueRouter.prototype.push

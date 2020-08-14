@@ -87,6 +87,7 @@ export default {
 
     showMv(){
       console.log('11111111')
+      this.$store.state.isMv = true
       this.$store.state.mvID = this.songDetail.mvID
       this.$router.push('/mv')
     }

@@ -47,7 +47,7 @@
 import MusicBar from "../../childMusic/musicBar";
 
 import {getSongComments} from "network/song";
-import CommentItem from "./commentItem";
+import CommentItem from "../../../../components/common/CommontItem/commentItem";
 
 export default {
   name: "musicComments",
@@ -73,6 +73,9 @@ export default {
       const state = this.$store.state
       getSongComments(state.musicSrc.id, 30, this.page).then(res => {
         console.log(res)
+        if (!this.page) {
+          this.comments.push.apply(this.comments, res.hotComments)
+        }
         this.comments.push.apply(this.comments, res.comments)
         console.log(this.comments)
         this.allCommentCount = res.total

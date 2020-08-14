@@ -29,6 +29,8 @@ const state = {
   isMusic: false,           //是否显示底部音乐
   isLogin: false,          //是否登录
   isMusicPop: false,       //是否显示音乐大屏
+  isMv:false,              //是否显示MV
+  isSinger:false,          //是否显示歌手页面
   isSearchPop: false,      //是否显示搜索
   isComment:true          //是否显示评论
 }

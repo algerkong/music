@@ -1,6 +1,6 @@
 <template>
   <div class="song-page">
-    <van-swipe :loop="false" :width="300">
+    <van-swipe :loop="false" :width="350" :show-indicators="false">
       <van-swipe-item v-for="(item, index) in list" :key="index" >
         <div>
           <div v-for="song in item.resources" @click="itemClick(song)" class="item-page">
