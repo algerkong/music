@@ -36,6 +36,20 @@
         </div>
 
       </div>
+      <my-bar>
+        <template v-slot:home>
+           <div>
+             <van-image width="100" height="100" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+           </div>
+          <div>
+            <p>听歌排行</p>
+            <p></p>
+          </div>
+        </template>
+        <template v-slot:my>
+
+        </template>
+      </my-bar>
     </van-popup>
 
   </div>
@@ -44,9 +58,11 @@
 <script>
 import {Toast} from 'vant';
 import {getUserDetail} from "network/my";
+import MyBar from "./childMy/myBar";
 
 export default {
   name: "my",
+  components: {MyBar},
   data() {
     return {
       show: true,

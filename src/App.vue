@@ -17,6 +17,8 @@ import MusicBottomBar from "./components/common/TabBar/musicBottomBar";
 import SearchBar from "./components/common/SearchBar/searchBar";
 import Music from "./views/music/music";
 
+import {getLoginState} from "./network/my";
+
 export default {
   name: 'App',
   components: {Music, SearchBar, MusicBottomBar, TabBar},
@@ -24,6 +26,16 @@ export default {
     return {
       active: 0,
     }
+  },
+  created() {
+    getLoginState().then(res=>{
+      if(res.code === 200){
+        this.$store.state.isLogin = true
+        this.$store.state.myID = res.profile.userId
+      }else {
+        this.$store.state.isLogin = false
+      }
+    })
   },
   methods: {
     myClick() {

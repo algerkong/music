@@ -50,6 +50,7 @@ export default {
     return {
       username: '',
       password: '',
+      message:''
     };
   },
   methods: {
@@ -68,8 +69,11 @@ export default {
             this.$store.state.myID = res.account.id
             this.$router.back()
             console.log(res)
-          } else {
-            Toast('登录失败')
+          } else if(res.code === 400) {
+            this.message = res.msg
+            Toast(this.message)
+          }else{
+            Toast("账号不存在")
           }
         })
       } else {

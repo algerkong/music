@@ -11,6 +11,14 @@ export function getLogin(login){
   })
 }
 
+
+export function getLoginState(uid){
+  return request({
+    url:'/login/status'
+  })
+}
+
+
 export function getUserDetail(uid){
   return request({
     url:'/user/detail',
@@ -19,5 +27,16 @@ export function getUserDetail(uid){
     }
   })
 }
+
+export function getHistoryCount(uid,type){
+  return request({
+    url:'/user/record',
+    params:{
+      uid,
+      type
+    }
+  })
+}
+
 
 
