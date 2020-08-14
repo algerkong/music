@@ -10,7 +10,7 @@
             <div class="song-title">
               <p>
                 {{ song.uiElement.mainTitle.title }}
-                <sapn class="author" v-if="song.resourceExtInfo"> - {{ song.resourceExtInfo.artists[0].name }}</sapn>
+                <span class="author" v-if="song.resourceExtInfo"> - {{ song.resourceExtInfo.artists[0].name }}</span>
               </p>
               <!--              <p>{{ song.uiElement.subTitle.title}}</p>-->
             </div>

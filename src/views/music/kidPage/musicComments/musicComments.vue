@@ -2,7 +2,7 @@
   <div>
     <van-popup
         class="comment-page"
-        v-model="$store.state.isComment"
+        v-model="$store.state.isShow"
         duration="0.2"
         position="bottom"
         :style="{ height: '100%' }"

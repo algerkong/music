@@ -5,10 +5,7 @@
       <div class="banner">
         <van-swipe class="my-swipe" :autoplay="3000" indicator-color="rgb(238, 10, 36)">
           <van-swipe-item v-for="item in banners">
-            <vue-lazy-component tagName="div">
-              <van-image :src="item.pic"/>
-            </vue-lazy-component>
-
+            <van-image :src="item.pic"/>
           </van-swipe-item>
         </van-swipe>
       </div>

@@ -2,7 +2,7 @@
   <div>
     <van-popup
         class="music-page"
-        v-model="$store.state.isMusicPop"
+        v-model="$store.state.isShow"
         duration="0.2"
         position="bottom"
         :style="{ height: '100%' }"
@@ -156,8 +156,6 @@ export default {
       this.isText = !this.isText
     },
     showComment() {
-      this.$store.state.isComment = true
-      console.log('11111111111111')
       this.$router.push('/comment')
     },
     isPlay() {
@@ -168,7 +166,6 @@ export default {
       this.isHistory = true
     },
     showAuthor() {
-      this.$store.state.isSinger = true
       this.$router.push('/singer')
     },
     sliderChange(value) {

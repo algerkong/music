@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <search-bar v-if="$store.state.isBar" @my-click="myClick"/>
+    <search-bar @my-click="myClick"/>
 <!--    <tab-bar v-if="$store.state.isBar"></tab-bar>-->
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive"/>
@@ -23,13 +23,12 @@ export default {
   data() {
     return {
       active: 0,
-      isBar: this.$store.state.isBar
     }
   },
   methods: {
     myClick() {
-      this.$store.state.isBar = false
-      this.$store.state.isMusic = false
+      // this.$store.state.isBar = false
+      // this.$store.state.isMusic = false
       if (this.$store.state.isLogin) {
         this.$router.push('/my')
       } else {

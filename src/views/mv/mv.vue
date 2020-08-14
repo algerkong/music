@@ -2,7 +2,7 @@
   <div>
     <van-popup
         class="mv-page"
-        v-model="$store.state.isMv"
+        v-model="$store.state.isShow"
         duration="0.2"
         position="bottom"
         :style="{ height: '100%' }"

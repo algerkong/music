@@ -1,35 +1,42 @@
 <template>
   <div>
-    <van-nav-bar
-        title="登录账号"
-        left-text=""
-        left-arrow
-        @click-left="onClickLeft"
-    />
+    <van-popup
+        class="music-page"
+        v-model="$store.state.isShow"
+        duration="0.2"
+        position="bottom"
+        :style="{ height: '100%' }"
+    >
+      <van-nav-bar
+          title="登录账号"
+          left-text=""
+          left-arrow
+          @click-left="onClickLeft"
+      />
 
-    <van-form class="login-page" @submit="onSubmit" v-if="!$store.state.isLogin">
-      <div class="text-tel">
-        <van-field
-            v-model="username"
-            name="username"
-            placeholder="请填写手机号"
-        />
-      </div>
-      <div class="text-pas">
-        <van-field
-            v-model="password"
-            type="password"
-            name="password"
-            placeholder="请填写密码"
-        />
-      </div>
-      <div style="margin: 16px;">
-        <van-button round block type="info" native-type="submit">
-          登录
-        </van-button>
-      </div>
-    </van-form>
-
+      <van-form class="login-page" @submit="onSubmit">
+        <div class="text-tel">
+          <van-field
+              v-model="username"
+              name="username"
+              placeholder="请填写手机号"
+          />
+        </div>
+        <div class="text-pas">
+          <van-field
+              v-model="password"
+              type="password"
+              name="password"
+              placeholder="请填写密码"
+          />
+        </div>
+        <div style="margin: 16px;">
+          <van-button round block type="info" native-type="submit">
+            登录
+          </van-button>
+        </div>
+      </van-form>
+    </van-popup>
   </div>
 </template>
 
@@ -47,8 +54,6 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$store.state.isBar = true
-      this.$store.state.isMusic = true
       this.$router.back()
       Toast('返回')
     },
@@ -60,7 +65,7 @@ export default {
             this.$store.state.isLogin = true
             this.$store.state.isBar = true
             this.$store.state.isMusic = true
-            this.$store.state.myID=res.account.id
+            this.$store.state.myID = res.account.id
             this.$router.back()
             console.log(res)
           } else {

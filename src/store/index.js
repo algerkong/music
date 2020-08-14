@@ -23,16 +23,12 @@ const state = {
   search: '',              //搜索的字符
   myID: 498033815,          //登录用户ID
   
-  audio:'',               //播放器
+  audio: '',               //播放器
   
-  isBar: true,            //是否显示顶栏
-  isMusic: false,           //是否显示底部音乐
+  isShow:true,            //是否显示
   isLogin: false,          //是否登录
-  isMusicPop: false,       //是否显示音乐大屏
-  isMv:false,              //是否显示MV
-  isSinger:false,          //是否显示歌手页面
+  isMusic: false,           //是否显示底部音乐
   isSearchPop: false,      //是否显示搜索
-  isComment:true          //是否显示评论
 }
 
 const store = new Vuex.Store({

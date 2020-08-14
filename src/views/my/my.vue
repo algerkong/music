@@ -1,35 +1,42 @@
 <template>
   <div>
-    <van-nav-bar
-        title="我的"
-        left-text=""
-        right-text="分享"
-        left-arrow
-        @click-left="onClickLeft"
-        @click-right="onClickRight"
-    />
-    <van-share-sheet
-        v-model="showShare"
-        title="立即分享给好友"
-        :options="options"
-        @select="onSelect"
-    />
+    <van-popup
+        class="music-page"
+        v-model="$store.state.isShow"
+        duration="0.2"
+        position="bottom"
+        :style="{ height: '100%' }"
+    >
+      <van-nav-bar
+          title="我的"
+          left-text=""
+          right-text="分享"
+          left-arrow
+          @click-left="onClickLeft"
+          @click-right="onClickRight"
+      />
+      <van-share-sheet
+          v-model="showShare"
+          title="立即分享给好友"
+          :options="options"
+          @select="onSelect"
+      />
 
-    <div class="user-page">
-      <van-image width="100%" height="" :src="userDetail.backUrl"/>
-      <div class="user-detail">
-        <div class="user-img">
-          <van-image width="90px" :src="userDetail.avatarUrl"/>
+      <div class="user-page">
+        <van-image width="100%" height="" :src="userDetail.backUrl"/>
+        <div class="user-detail">
+          <div class="user-img">
+            <van-image width="90px" :src="userDetail.avatarUrl"/>
+          </div>
+          <div class="user-name"><p>{{ userDetail.name }}</p></div>
+          <div class="user-fans">
+            关注 <span>{{ userDetail.follows }}</span>
+            粉丝 <span>{{ userDetail.followeds }}</span>
+          </div>
         </div>
-        <div class="user-name"><p>{{ userDetail.name }}</p></div>
-        <div class="user-fans">
-          关注 <span>{{ userDetail.follows }}</span>
-          粉丝 <span>{{ userDetail.followeds }}</span>
-        </div>
+
       </div>
-
-    </div>
-
+    </van-popup>
 
   </div>
 </template>
@@ -42,7 +49,7 @@ export default {
   name: "my",
   data() {
     return {
-      show:true,
+      show: true,
       showShare: false,
       options: [
         {name: '微信', icon: 'wechat'},
@@ -114,7 +121,7 @@ export default {
   position: absolute;
   top: 30vw;
   left: 0;
-  padding:10px 16px;
+  padding: 10px 16px;
 }
 
 .van-image {
@@ -126,12 +133,14 @@ export default {
   overflow: hidden;
   border-radius: 50%;
 }
-.user-name{
+
+.user-name {
   font-size: 18px;
   font-weight: 600;
   color: #ffffff;
 }
-.user-fans{
+
+.user-fans {
   color: #ffffff;
   opacity: 0.8;
 }

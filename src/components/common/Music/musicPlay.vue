@@ -60,7 +60,6 @@ export default {
   methods: {
     musicPop() {
       this.$router.push('/music')
-      this.$store.state.isMusicPop = true
     },
     btnClick() {
       this.onAudio();
