@@ -82,32 +82,36 @@ export default {
       let state = this.$store.state;
       if (this.$store.state.musicSrc.isPlay) {
         state.audio = audio
-        audio.addEventListener("timeupdate", function () {//监听音频播放的实时时间事件
-          let timeDisplay;
-          //用秒数来显示当前播放进度
-          state.newTime = audio.currentTime
+        try {
+          audio.addEventListener("timeupdate", function () {//监听音频播放的实时时间事件
+            let timeDisplay;
+            //用秒数来显示当前播放进度
+            state.newTime = audio.currentTime
 
-          // console.log(state.newTime);
-          timeDisplay = Math.floor(audio.currentTime);//获取实时时间
-          // console.log(timeDisplay)
-          //处理时间
-          //分钟
-          let minute = timeDisplay / 60;
-          let minutes = parseInt(minute);
-          if (minutes < 10) {
-            minutes = "0" + minutes;
-          }
-          //秒
-          let second = timeDisplay % 60;
-          let seconds = Math.round(second);
-          if (seconds < 10) {
-            seconds = "0" + seconds;
-          }
-          state.realMusicTime = minutes + ":" + seconds + "." + audio.currentTime.toString().replace(/\d+\.(\d*)/, "$1");//将实时时间存储到vuex中
-          if (audio.currentTime === audio.duration) {
-            state.musicSrc.isPlay = false
-          }
-        }, false);
+            // console.log(state.newTime);
+            timeDisplay = Math.floor(audio.currentTime);//获取实时时间
+            // console.log(timeDisplay)
+            //处理时间
+            //分钟
+            let minute = timeDisplay / 60;
+            let minutes = parseInt(minute);
+            if (minutes < 10) {
+              minutes = "0" + minutes;
+            }
+            //秒
+            let second = timeDisplay % 60;
+            let seconds = Math.round(second);
+            if (seconds < 10) {
+              seconds = "0" + seconds;
+            }
+            state.realMusicTime = minutes + ":" + seconds + "." + audio.currentTime.toString().replace(/\d+\.(\d*)/, "$1");//将实时时间存储到vuex中
+            if (audio.currentTime === audio.duration) {
+              state.musicSrc.isPlay = false
+            }
+          }, false);
+        } catch (err) {
+
+        }
       }
       state.allTime = audio.duration
     }

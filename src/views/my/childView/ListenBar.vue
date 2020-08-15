@@ -11,10 +11,10 @@
               title-inactive-color="#333">
 
       <van-tab class="cent" :title="tabBarList[0].title">
-        <slot name="home"></slot>
+        <slot name="week"></slot>
       </van-tab>
       <van-tab class="cent"  :title="tabBarList[1].title">
-        <slot name="my"></slot>
+        <slot name="all"></slot>
       </van-tab>
     </van-tabs>
   </div>
@@ -23,18 +23,18 @@
 <script>
 
 export default {
-  name: "myBar",
+  name: "ListenBar",
   data() {
     return {
       active: 0,
       tabBarList: [
         {
-          name: "home",
-          title: "主页",
+          name: "weekdays",
+          title: "最近一周",
         },
         {
-          name: "songs",
-          title: "动态",
+          name: "all",
+          title: "所有时间",
         }
       ]
     }

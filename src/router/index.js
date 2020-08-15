@@ -5,12 +5,14 @@ Vue.use(VueRouter)
 
 const Home = () => import ('../views/home/home')
 const My = () => import ('../views/my/my')
+const listenSong = () => import ('../views/my/childView/ListenSongRanking')
 const Music = () => import('../views/music/music')
 const Search = () => import('../views/search/search')
 const Login = () => import('../views/login/login')
 const Singer = () => import('../views/singer/singer')
 const Mv = () => import('../views/mv/mv')
 const MusicComments = () => import('../views/music/kidPage/musicComments/musicComments')
+
 
 const routes = [
   {
@@ -27,6 +29,14 @@ const routes = [
   {
     path: '/my',
     component: My,
+    meta: {
+      keepAlive: false
+    }
+  },
+  {
+    path: '/listenSong',
+    component: listenSong,
+    name: 'listenSong',
     meta: {
       keepAlive: false
     }

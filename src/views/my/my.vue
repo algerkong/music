@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my">
     <van-popup
         class="music-page"
         v-model="$store.state.isShow"
@@ -7,44 +7,37 @@
         position="bottom"
         :style="{ height: '100%' }"
     >
-      <van-nav-bar
-          title="我的"
-          left-text=""
-          right-text="分享"
-          left-arrow
-          @click-left="onClickLeft"
-          @click-right="onClickRight"
-      />
-      <van-share-sheet
-          v-model="showShare"
-          title="立即分享给好友"
-          :options="options"
-          @select="onSelect"
-      />
+
+      <div>
+        <top-bar class="top-bar" :title="topStyle?userDetail.name:''" :style="topStyle"/>
+      </div>
 
       <div class="user-page">
-        <van-image width="100%" height="" :src="userDetail.backUrl"/>
+        <van-image class="img-back" width="100%" height="" :src="userDetail.backUrl"/>
         <div class="user-detail">
           <div class="user-img">
             <van-image width="90px" :src="userDetail.avatarUrl"/>
           </div>
-          <div class="user-name"><p>{{ userDetail.name }}</p></div>
+          <div class="user-name">
+            <p>
+              {{ userDetail.name }}
+              <van-tag round type="danger">lv{{ userDetail.level }}</van-tag>
+            </p>
+          </div>
+          <div class="signature opacity8">
+            <p>{{ userDetail.signature }}</p>
+          </div>
           <div class="user-fans">
             关注 <span>{{ userDetail.follows }}</span>
             粉丝 <span>{{ userDetail.followeds }}</span>
           </div>
+
         </div>
 
       </div>
-      <my-bar>
+      <my-bar @isSticky="isSticky" class="my-detail">
         <template v-slot:home>
-           <div>
-             <van-image width="100" height="100" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-           </div>
-          <div>
-            <p>听歌排行</p>
-            <p></p>
-          </div>
+          <item-cent title="听歌排行" describe="累计听歌数据" @click.native="showSongRanking"/>
         </template>
         <template v-slot:my>
 
@@ -59,14 +52,17 @@
 import {Toast} from 'vant';
 import {getUserDetail} from "network/my";
 import MyBar from "./childMy/myBar";
+import TopBar from "../../components/common/TabBar/topBar";
+import ItemCent from "../../components/content/itemCent/ItemCent";
 
 export default {
   name: "my",
-  components: {MyBar},
+  components: {ItemCent, TopBar, MyBar},
   data() {
     return {
       show: true,
       showShare: false,
+      topStyle: '',
       options: [
         {name: '微信', icon: 'wechat'},
         {name: '微博', icon: 'weibo'},
@@ -76,23 +72,30 @@ export default {
       ],
       userDetail: {
         name: '',           //昵称
+        id:'',              //id
+        level: '',           //等级
         backUrl: '',        //背景
         avatarUrl: '',      //头像
         signature: '',      //签名
         followeds: 0,       //粉丝
-        follows: 0           //关注
+        follows: 0,           //关注
       }
     };
   },
   created() {
     getUserDetail(this.$store.state.myID).then(res => {
       console.log(res)
+
       this.userDetail.backUrl = res.profile.backgroundUrl
       this.userDetail.name = res.profile.nickname
+      this.userDetail.id = res.profile.userId
+      this.userDetail.level = res.level
       this.userDetail.avatarUrl = res.profile.avatarUrl
       this.userDetail.signature = res.profile.signature
       this.userDetail.followeds = res.profile.followeds
       this.userDetail.follows = res.profile.follows
+      this.userDetail.follows = res.profile.follows
+      console.log(this.userDetail.id)
 
     })
   },
@@ -111,22 +114,46 @@ export default {
       Toast(option.name);
       this.showShare = false
     },
+    isSticky(isFixed) {
+      console.log(isFixed)
+      if (isFixed.isFixed) {
+        this.topStyle =
+            "background:url(" + this.userDetail.backUrl + ");" +
+            "background-size: 100%;" +
+            "background-position: bottom;" +
+            "filter: brightness(80%);"
+      } else {
+        this.topStyle = ''
+      }
+    },
+    //显示听歌排行
+    showSongRanking(){
+      console.log('111')
+      this.$router.push({
+        name:'listenSong',
+        params:{
+          id:this.userDetail.id
+        }
+      })
+    }
   },
 }
 </script>
 
 <style scoped>
-.user-page {
-  width: 100vw;
-}
-
-.van-nav-bar {
-  position: fixed;
+.my{
+  position: relative;
   top: 0;
   left: 0;
-  z-index: 999;
+  z-index: 500;
+}
+.user-page {
   width: 100vw;
-  background-color: #00000000;
+  height: 90vw;
+}
+
+.img-back {
+  filter: brightness(70%)
 }
 
 .van-hairline--bottom::after {
@@ -135,9 +162,10 @@ export default {
 
 .user-detail {
   position: absolute;
-  top: 30vw;
+  top: 20vw;
   left: 0;
   padding: 10px 16px;
+  color: #ffffff;
 }
 
 .van-image {
@@ -152,12 +180,27 @@ export default {
 
 .user-name {
   font-size: 18px;
-  font-weight: 600;
-  color: #ffffff;
+  font-weight: 700;
+  padding: 20px 0 10px;
 }
 
-.user-fans {
-  color: #ffffff;
-  opacity: 0.8;
+.opacity8{
+  opacity: 80%;
+}
+
+.user-fans{
+  padding: 5px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.signature {
+  padding: 5px 0;
+  line-height: 25px;
+}
+
+.my-detail {
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
 }
 </style>

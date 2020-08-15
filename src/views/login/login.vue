@@ -56,7 +56,7 @@ export default {
   methods: {
     onClickLeft() {
       this.$router.back()
-      Toast('返回')
+      // Toast('返回')
     },
     onSubmit(values) {
       if (this.username !== '' && this.password !== '') {

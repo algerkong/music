@@ -1,6 +1,6 @@
 <template>
 
-  <div class="top-bar">
+  <div class="top-bar" :style="topStyle">
     <van-nav-bar
         class="music-bar"
         left-arrow
@@ -49,6 +49,12 @@ export default {
       default() {
         return ''
       }
+    },
+    topStyle: {
+      type: String,
+      default() {
+        return ''
+      }
     }
   },
   data() {
@@ -80,20 +86,27 @@ export default {
 </script>
 
 <style scoped>
-.top-bar{
+.top-bar {
   position: fixed;
   width: 100vw;
   height: 70px;
-  z-index: 999;
+  z-index: 1000;
   color: #ffffff;
+  transition: .5s;
+  background: #31313100;
+  background-size: 100%;
+  background-position: center;
 }
+
 .music-bar {
-  height: 60px;
+  height: 70px;
   background-color: #00000000;
 }
 
-.title{
+.title {
   color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .music-bar::after {

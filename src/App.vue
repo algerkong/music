@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <search-bar @my-click="myClick"/>
-<!--    <tab-bar v-if="$store.state.isBar"></tab-bar>-->
+    <!--    <tab-bar v-if="$store.state.isBar"></tab-bar>-->
     <keep-alive>
       <router-view v-if="$route.meta.keepAlive"/>
     </keep-alive>
@@ -28,14 +28,18 @@ export default {
     }
   },
   created() {
-    getLoginState().then(res=>{
-      if(res.code === 200){
-        this.$store.state.isLogin = true
-        this.$store.state.myID = res.profile.userId
-      }else {
-        this.$store.state.isLogin = false
-      }
-    })
+    setTimeout(() => {
+      getLoginState().then(res => {
+        console.log(res)
+        if (res.code === 200) {
+          console.log(res)
+          this.$store.state.isLogin = true
+          this.$store.state.myID = res.profile.userId
+        } else {
+          this.$store.state.isLogin = false
+        }
+      })
+    }, 1000)
   },
   methods: {
     myClick() {
