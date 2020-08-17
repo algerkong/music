@@ -8,7 +8,7 @@
     <router-view v-if="!$route.meta.keepAlive"/>
     <music-bottom-bar v-if="$store.state.isMusic"></music-bottom-bar>
 
-    <div class="start-page"></div>
+    <div class="start-page" v-if="isStart"></div>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       active: 0,
+      isStart:true
     }
   },
   created() {
@@ -42,6 +43,9 @@ export default {
         }
       })
     }, 1000)
+    setTimeout(()=>{
+      this.isStart = false
+    },4000)
   },
   methods: {
     myClick() {
