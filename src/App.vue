@@ -7,6 +7,8 @@
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"/>
     <music-bottom-bar v-if="$store.state.isMusic"></music-bottom-bar>
+
+    <div class="start-page"></div>
   </div>
 </template>
 
@@ -58,4 +60,32 @@ export default {
 
 <style>
 @import "assets/css/base.css";
+
+.start-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("https://p.pstatp.com/origin/1385300001951ba6a91a2");
+  background-size: 100%;
+  background-position: center;
+  animation: start 4s cubic-bezier(.31,.93,.49,.96);
+  opacity: 0;
+}
+
+@keyframes start {
+  0%{
+    opacity: 1;
+  }
+  80%{
+    opacity: 1;
+    transform: scale(1);
+  }
+  100%{
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
 </style>
