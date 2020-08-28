@@ -39,7 +39,12 @@ export default {
   },
   methods:{
     itemClick(){
-      Toast('还没做')
+      this.$router.push({
+        name: 'songList',
+        params: {
+          id: this.ID
+        }
+      })
     }
   }
 }

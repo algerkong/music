@@ -12,6 +12,7 @@ const Login = () => import('../views/login/login')
 const Singer = () => import('../views/singer/singer')
 const Mv = () => import('../views/mv/mv')
 const MusicComments = () => import('../views/music/kidPage/musicComments/musicComments')
+const songList = () => import('../views/songList/songList')
 
 
 const routes = [
@@ -31,6 +32,14 @@ const routes = [
     component: My,
     meta: {
       keepAlive: false
+    }
+  },
+  {
+    path: '/songList',
+    component: songList,
+    name: 'songList',
+    meta: {
+      // keepAlive: false
     }
   },
   {
@@ -79,6 +88,7 @@ const routes = [
   {
     path: '/mv',
     component: Mv,
+    name:'mv',
     meta: {
       keepAlive: false
     }

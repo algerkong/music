@@ -24,7 +24,7 @@
               <van-tag round type="danger">lv{{ userDetail.level }}</van-tag>
             </p>
           </div>
-          <div class="signature opacity8">
+          <div class="signature">
             <p>{{ userDetail.signature }}</p>
           </div>
           <div class="user-fans">
@@ -72,7 +72,7 @@ export default {
       ],
       userDetail: {
         name: '',           //昵称
-        id:'',              //id
+        id: '',              //id
         level: '',           //等级
         backUrl: '',        //背景
         avatarUrl: '',      //头像
@@ -127,12 +127,12 @@ export default {
       }
     },
     //显示听歌排行
-    showSongRanking(){
+    showSongRanking() {
       console.log('111')
       this.$router.push({
-        name:'listenSong',
-        params:{
-          id:this.userDetail.id
+        name: 'listenSong',
+        params: {
+          id: this.userDetail.id
         }
       })
     }
@@ -141,12 +141,13 @@ export default {
 </script>
 
 <style scoped>
-.my{
+.my {
   position: relative;
   top: 0;
   left: 0;
   z-index: 500;
 }
+
 .user-page {
   width: 100vw;
   height: 90vw;
@@ -184,11 +185,7 @@ export default {
   padding: 20px 0 10px;
 }
 
-.opacity8{
-  opacity: 80%;
-}
-
-.user-fans{
+.user-fans {
   padding: 5px 0;
   font-size: 18px;
   font-weight: 600;
@@ -197,6 +194,7 @@ export default {
 .signature {
   padding: 5px 0;
   line-height: 25px;
+  color: #ffffffc4;
 }
 
 .my-detail {

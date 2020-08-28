@@ -29,6 +29,11 @@ Array.prototype.pushNoRepeat = function () {
   }
 };
 
+import axios from 'axios'
+axios.defaults.withCredentials = true
+Vue.prototype.$axios = axios
+
+
 new Vue({
   render: h => h(App),
   router

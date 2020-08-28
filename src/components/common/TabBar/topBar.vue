@@ -1,10 +1,11 @@
 <template>
 
-  <div class="top-bar" :style="topStyle">
+  <div class="top-bar" >
     <van-nav-bar
         class="music-bar"
         left-arrow
         @click-right="onClickRight"
+        :style="topStyle"
     >
       <template #left>
         <van-icon

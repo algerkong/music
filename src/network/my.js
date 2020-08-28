@@ -4,9 +4,11 @@ export function getLogin(login){
   return request({
     // https://autumnfish.cn/login/cellphone?phone=15234562389&password=1455048564
     url: '/login/cellphone',
+    withCredentials: true, //关键  跨域请求
     params: {
       phone: login.username,
-      password:login.password
+      password:login.password,
+      timestamp:new Date().getTime()
     }
   })
 }

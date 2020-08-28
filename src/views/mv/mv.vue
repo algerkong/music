@@ -77,6 +77,7 @@ export default {
   components: {CommentItem, TopBar},
   data() {
     return {
+      mvID:'',
       activeNames: ['0'],
       loading: false,
       finished: false,
@@ -100,18 +101,19 @@ export default {
     }
   },
   created() {
+    this.mvID = this.$route.params.id
     //打开时暂停播放音乐
     const state = this.$store.state
     state.musicSrc.isPlay = false
     //获取mv播放地址
-    getMv(state.mvID).then(res => {
-      console.log(state.mvID)
+    getMv(this.mvID).then(res => {
+      console.log(this.mvID)
       console.log(res)
       this.mvSrc = res.data.url
     })
 
     //获取MV信息
-    getMvDetail(state.mvID).then(res => {
+    getMvDetail(this.mvID).then(res => {
       console.log(res)
       this.mvBackground = res.data.cover
       this.mvName = res.data.name
@@ -138,8 +140,7 @@ export default {
       this.$router.push('/singer')
     },
     onLoad() {
-      const state = this.$store.state
-      getMvComments(state.mvID, 30, this.page).then(res => {
+      getMvComments(this.mvID, 30, this.page).then(res => {
         console.log(res)
         if(!this.page){
           this.comments.push.apply(this.comments, res.hotComments)

@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="song-mv">
-      <van-icon name="play-circle-o" size="25" color="#6f6f6f" v-if="songDetail.mvID" @click="showMv"/>
+      <van-icon name="play-circle-o" size="25" color="#6f6f6f" v-if="songDetail.mvID" @click="showMv(songDetail.mvID)"/>
     </div>
     <div class="song-set">
       <van-icon class="set-icon" name="ellipsis" size="20" color="#6f6f6f"/>
@@ -85,9 +85,13 @@ export default {
       })
     },
 
-    showMv() {
-      this.$store.state.mvID = this.songDetail.mvID
-      this.$router.push('/mv')
+    showMv(id) {
+       this.$router.push({
+        name: 'mv',
+        params: {
+          id: id
+        }
+      })
     }
 
   },

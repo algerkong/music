@@ -27,25 +27,23 @@ export default {
   data() {
     return {
       active: 0,
-      isStart:true
+      isStart: true
     }
   },
   created() {
-    setTimeout(() => {
-      getLoginState().then(res => {
+    getLoginState().then(res => {
+      console.log(res)
+      if (res.code === 200) {
         console.log(res)
-        if (res.code === 200) {
-          console.log(res)
-          this.$store.state.isLogin = true
-          this.$store.state.myID = res.profile.userId
-        } else {
-          this.$store.state.isLogin = false
-        }
-      })
-    }, 1000)
-    setTimeout(()=>{
+        this.$store.state.isLogin = true
+        this.$store.state.myID = res.profile.userId
+      } else {
+        this.$store.state.isLogin = false
+      }
+    })
+    setTimeout(() => {
       this.isStart = false
-    },4000)
+    }, 4000)
   },
   methods: {
     myClick() {
@@ -75,19 +73,19 @@ export default {
   background-image: url("https://p.pstatp.com/origin/1385300001951ba6a91a2");
   background-size: 100%;
   background-position: center;
-  animation: start 4s cubic-bezier(.31,.93,.49,.96);
+  animation: start 4s cubic-bezier(.31, .93, .49, .96);
   opacity: 0;
 }
 
 @keyframes start {
-  0%{
+  0% {
     opacity: 1;
   }
-  80%{
+  80% {
     opacity: 1;
     transform: scale(1);
   }
-  100%{
+  100% {
     transform: scale(1.5);
     opacity: 0;
   }

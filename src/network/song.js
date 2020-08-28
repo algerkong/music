@@ -116,3 +116,13 @@ export class Songs {
     this.img = songs.al.picUrl //歌曲图片
   }
 }
+
+// 获取歌单歌曲列表
+export function getSongList(id) {
+  return request({
+    url: '/playlist/detail',
+    params: {
+      id
+    }
+  })
+}
