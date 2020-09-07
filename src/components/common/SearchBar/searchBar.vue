@@ -66,7 +66,7 @@ export default {
       this.$emit('my-click')
     },
     showSet(){
-      Toast('还没做')
+       this.$router.push('/set')
     }
   },
 }

@@ -13,6 +13,13 @@ export function getLogin(login){
   })
 }
 
+export function logOut(){
+  return request({
+    url: '/logout',
+    withCredentials: true, //关键  跨域请求
+  })
+}
+
 
 export function getLoginState(uid){
   return request({
