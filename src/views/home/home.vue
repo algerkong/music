@@ -150,11 +150,11 @@
       ballClick(index){
         switch (index) {
           case 0:
-            this.$router.push('/recommendSongs')
-            break
+            this.$router.push('/recommendSongs');
+            break;
           case 1:
-            this.$router.push('/list')
-            break
+            this.$router.push('/list');
+            break;
           default:
             Toast('错误!')
         }

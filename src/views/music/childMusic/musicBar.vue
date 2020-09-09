@@ -64,7 +64,6 @@ export default {
   },
   methods: {
     onClickLeft() {
-      this.$store.state.isMusicPop = false
       this.$router.back()
 
     },
