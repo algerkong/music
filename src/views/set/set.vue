@@ -11,7 +11,7 @@
       <div class="set-content">
         <van-form>
           <van-cell-group>
-            <van-cell>
+            <van-cell v-if="this.$store.state.isLogin">
               <van-button type="danger" block @click="clickLogOut">退出登录</van-button>
             </van-cell>
             <van-cell title="单元格" value="内容" label="描述信息"/>
@@ -28,6 +28,7 @@ import MusicBar from "../music/childMusic/musicBar";
 import {Dialog} from "vant";
 
 import {logOut} from "../../network/my";
+import {Toast} from "vant";
 
 export default {
   name: "set",
@@ -36,12 +37,6 @@ export default {
     return {}
   },
   methods: {
-    isLogOut() {
-      logOut.then(res => {
-        console.log('1111111111s')
-        console.log(res)
-      })
-    },
     clickLogOut() {
       Dialog.confirm({
         title: '退出登陆',
@@ -51,8 +46,13 @@ export default {
     },
     beforeClose(action, done) {
       if (action === 'confirm') {
-        this.isLogOut();
-        done();
+        logOut().then(res => {
+            if(res.code === 200){
+              this.$store.state.isLogin = false
+              done()
+              Toast('退出登录')
+            }
+          })
       } else {
         done();
       }

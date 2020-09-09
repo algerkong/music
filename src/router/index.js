@@ -14,6 +14,8 @@ const Mv = () => import('../views/mv/mv')
 const MusicComments = () => import('../views/music/kidPage/musicComments/musicComments')
 const songList = () => import('../views/songList/songList')
 const Set = () => import('../views/set/set')
+const RecommendSongs = () => import('../views/home/childView/recommendSongs')
+const List = () => import('../views/home/childView/songList')
 
 
 const routes = [
@@ -26,6 +28,20 @@ const routes = [
     component: Home,
     meta: {
       keepAlive: true
+    }
+  },
+  {
+    path: '/recommendSongs',
+    component: RecommendSongs,
+    meta: {
+      keepAlive: true
+    }
+  },
+    {
+    path: '/list',
+    component: List,
+    meta: {
+      keepAlive: false
     }
   },
   {

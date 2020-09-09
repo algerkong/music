@@ -9,9 +9,9 @@ import 'vant/lib/index.css';
 
 Vue.use(Vant);
 
-import VueLazyload from "vue-lazyload";
+import { Lazyload } from 'vant';
 
-Vue.use(VueLazyload);
+Vue.use(Lazyload);
 
 
 

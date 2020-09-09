@@ -1,5 +1,26 @@
 import {request} from "./request";
 
+//每日推荐
+export function getRecommendSongs() {
+  return request({
+    url: '/recommend/songs'
+  })
+}
+
+//全部歌单
+export function getList(limit,cat,offset) {
+  return request({
+    url: '/top/playlist',
+    params: {
+      limit,
+      cat,
+      offset
+    }
+  })
+}
+
+
+
 //歌曲信息
 export function getSongDetail(ids) {
   return request({
