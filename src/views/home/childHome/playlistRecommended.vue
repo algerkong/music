@@ -39,12 +39,8 @@ export default {
   },
   methods:{
     itemClick(){
-      this.$router.push({
-        name: 'songList',
-        params: {
-          id: this.ID
-        }
-      })
+      this.$store.state.listID = this.ID
+      this.$router.push('/songList')
     }
   }
 }

@@ -41,7 +41,7 @@ const routes = [
     path: '/list',
     component: List,
     meta: {
-      keepAlive: false
+      keepAlive: true
     }
   },
   {
@@ -63,7 +63,7 @@ const routes = [
     component: songList,
     name: 'songList',
     meta: {
-      // keepAlive: false
+      keepAlive: false
     }
   },
   {

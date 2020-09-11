@@ -17,9 +17,10 @@
             @load="onLoad"
         >
           <div class="list-page">
-            <div class="list-item" v-for="(item,index) in list" :key="index">
+            <div class="list-item" v-for="(item,index) in list" :key="index" @click="itemClick(item.id)">
               <span class="play-count"><van-icon name="play-circle-o" size="15"/>{{item.playCount}}</span>
-              <van-image class="list-img" width="100%" :src="item.coverImgUrl"/>
+              <!--              <van-image class="list-img" width="100%" :src="item.coverImgUrl"/>-->
+              <img v-lazy="item.coverImgUrl" class="list-img" width="100%" alt="">
               <p>{{item.name}}</p>
             </div>
           </div>
@@ -39,7 +40,7 @@
     components: {TopBar},
     data() {
       return {
-        show:true,
+        show: true,
         list: [],
         loading: false,
         finished: false,
@@ -47,6 +48,10 @@
       };
     },
     methods: {
+      itemClick(id) {
+        this.$store.state.listID = id
+        this.$router.push('/songList')
+      },
       onLoad() {
         // 异步更新数据
         // setTimeout 仅做示例，真实场景中一般为 ajax 请求

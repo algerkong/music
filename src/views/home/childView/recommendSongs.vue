@@ -21,42 +21,44 @@
 </template>
 
 <script>
-  import {getRecommendSongs} from "network/song";
-  import ItemSearch from "../../search/childSearch/itemSearch";
-  import TopBar from "../../../components/common/TabBar/topBar";
-  
-  export default {
-    name: "recommendSongs",
-    components: {TopBar, ItemSearch},
-    data() {
-      return {
-        songs: [],
-        show:true
-      }
-    },
-    created() {
-      getRecommendSongs().then(res => {
-        this.songs = res.data.dailySongs
-      })
+import {getRecommendSongs} from "network/song";
+import ItemSearch from "../../search/childSearch/itemSearch";
+import TopBar from "../../../components/common/TabBar/topBar";
+
+export default {
+  name: "recommendSongs",
+  components: {TopBar, ItemSearch},
+  data() {
+    return {
+      songs: [],
+      show: true
     }
+  },
+  created() {
+    getRecommendSongs().then(res => {
+      this.songs = res.data.dailySongs
+    })
   }
+}
 </script>
 
 <style scoped>
-  .top-bar {
-    width: 100%;
-  }
-  
-  .content{
-    width: 100%;
-    height: 70px;
-  }
-  
-  .song-list {
-    position: relative;
-    top: -30px;
-    z-index: 99;
-    overflow: hidden;
-    border-radius: 20px 20px 0 0;
-  }
+.top-bar {
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  height: 70px;
+}
+
+.song-list {
+  position: relative;
+  top: -30px;
+  z-index: 99;
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
+  padding-top: 15px;
+  background: #fff;
+}
 </style>

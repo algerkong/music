@@ -13,7 +13,8 @@
       </div>
 
       <div class="user-page">
-        <van-image class="img-back" width="100%" height="" :src="userDetail.backUrl"/>
+<!--        <van-image class="img-back" width="100%" height="" :src="userDetail.backUrl"/>-->
+        <img v-lazy="userDetail.backUrl" alt="" class="img-back" width="100%">
         <div class="user-detail">
           <div class="user-img">
             <van-image width="90px" :src="userDetail.avatarUrl"/>

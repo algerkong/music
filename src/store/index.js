@@ -22,6 +22,7 @@ const state = {
   homeCount: 0,           //首页为第几页
   search: '',              //搜索的字符
   myID: 498033815,          //登录用户ID
+  listID:0,                 //歌单ID
   
   audio: '',               //播放器
   

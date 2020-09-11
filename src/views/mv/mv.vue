@@ -2,7 +2,7 @@
   <div>
     <van-popup
         class="mv-page"
-        v-model="$store.state.isShow"
+        v-model="show"
         duration="0.2"
         position="bottom"
         :style="{ height: '100%' }"
@@ -77,6 +77,7 @@ export default {
   components: {CommentItem, TopBar},
   data() {
     return {
+      show:true,
       mvID:'',
       activeNames: ['0'],
       loading: false,
