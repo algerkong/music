@@ -138,6 +138,13 @@ export class Songs {
   }
 }
 
+//获取歌单类型
+export function getListTag() {
+  return request({
+    url: '/playlist/hot'
+  })
+}
+
 // 获取歌单歌曲列表
 export function getSongList(id) {
   return request({

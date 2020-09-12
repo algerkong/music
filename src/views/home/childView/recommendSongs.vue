@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page">
     <van-popup
         v-model="show"
         duration="0.2"
@@ -9,7 +9,8 @@
       <top-bar class="top-bar" title="每日推荐" style="background-color:#ff0000"/>
       <div class="content"></div>
       <div>
-        <van-image :src="songs[0].al.picUrl"/>
+        <img v-lazy="songs[0].al.picUrl"  width="100%" alt="">
+<!--        <van-image :src="songs[0].al.picUrl"/>-->
       </div>
       <div class="song-list">
         <van-cell v-for="(item,index) in songs" :key="index">
@@ -43,6 +44,14 @@ export default {
 </script>
 
 <style scoped>
+
+.page {
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 500;
+}
+
 .top-bar {
   width: 100%;
 }

@@ -1,9 +1,8 @@
 <template>
   <div class="list">
     <van-popup
-        class="music-page"
         v-model="show"
-        duration="0.2"
+        duration="0.3"
         position="bottom"
         :style="{ height: '100%' }"
     >
@@ -13,6 +12,19 @@
       <div class="img-page">
         <img v-lazy="img" width="100%" alt=""/>
       </div>
+      <div class="describe">
+        <div class="img-box">
+          <span class="play-count"><van-icon name="play-circle-o" size="15"/>{{ playCount }}</span>
+          <img v-lazy="img" width="120px" alt="">
+        </div>
+        <div>
+          <h2>{{ title }}</h2>
+          <div class="author" @click="arShow">
+            <img v-lazy="arImg" alt="" width="25px">
+            <span>{{ arName }}</span>
+          </div>
+        </div>
+      </div>
       <div class="song-list">
         <van-form class="list-page">
           <van-cell v-for="(item,index) in song" :key="item.al.name">
@@ -21,7 +33,7 @@
               <div class="item-data">
                 <div class="word">
                   <p>
-                    <span>{{ item.name }}</span>
+                    <span>{{ item.al.name }}</span>
                     <span v-if="item.alia.length === 1" class="gray">
                 ({{ item.alia[0] }})
               </span>
@@ -33,7 +45,7 @@
                   {{ item2.name }}
                   <i v-if="item.ar.length!==index2+1">/</i>
                 </span>
-                    <span> - {{ item.al.name }}</span>
+                    <span> - {{ item.name }}</span>
                   </p>
                 </div>
               </div>
@@ -63,23 +75,35 @@ export default {
       show: true,
       id: '',
       img: '',
-      title: '',
       song: [],
       topStyle: '',
+      title: '',
+      arName: '',
+      arImg: '',
+      arID:'',
+      playCount: '',
+
     }
   },
+
   created() {
     let id = 0
     id = this.$store.state.listID
     getSongList(id).then(res => {
       this.img = res.playlist.coverImgUrl
-      this.title = res
+      this.title = res.playlist.name
+      this.arName = res.playlist.creator.nickname
       this.song = res.playlist.tracks
+      this.playCount = res.playlist.playCount
+      this.arImg = res.playlist.creator.avatarUrl
+      this.arID =res.playlist.creator.userId
       console.log(res)
-      this.topStyle = 'background-image:url(' + res.playlist.coverImgUrl + ');' +
+      this.topStyle =
+          'background-color:rgba(0, 0, 0, 0.246);' +
           'background-size:100%;' +
           'background-position:top;' +
-          'filter: brightness(80%);'
+          'backdrop-filter: brightness(80%);' +
+          'backdrop-filter: blur(15px);'
     })
   },
   methods: {
@@ -114,6 +138,10 @@ export default {
           id: id
         }
       })
+    },
+    arShow(){
+      this.$store.state.userID = this.arID
+      this.$router.push('/my')
     }
   },
   mounted() {
@@ -131,8 +159,82 @@ export default {
 }
 
 .img-page {
-  filter: brightness(80%)
+  width: 100%;
+  overflow: hidden;
+  filter: brightness(90%) saturate(45%) contrast(70%);
 }
+
+.img-page img {
+  background-color: #acacac;
+  transform: translate(200px, 200px) scale(1000);
+}
+
+.describe {
+  position: absolute;
+  top: 130px;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.author{
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 25px;
+}
+.author img{
+  border-radius: 50%;
+  vertical-align: bottom;
+  margin-right: 5px;
+}
+
+.img-box {
+  position: relative;
+  margin-right: 16px;
+}
+
+.img-box:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  box-shadow: inset 0 20px 10px 0 #00000036;
+}
+
+.img-box img{
+  border-radius: 5px;
+  vertical-align: bottom;
+  vertical-align: bottom;
+}
+
+span.play-count {
+  font-size: 15px;
+  color: #fff;
+  position: absolute;
+  z-index: 999;
+  right: 10px;
+  top: 5px;
+}
+
+.describe h2 {
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 600;
+  padding-top: 10px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.describe p {
+
+}
+
 
 .content50 {
   height: 50px;

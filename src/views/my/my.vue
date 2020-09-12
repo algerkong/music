@@ -8,13 +8,12 @@
         :style="{ height: '100%' }"
     >
 
-      <div>
+      <div class="top">
         <top-bar class="top-bar" :title="topStyle?userDetail.name:''" :style="topStyle"/>
       </div>
 
       <div class="user-page">
-<!--        <van-image class="img-back" width="100%" height="" :src="userDetail.backUrl"/>-->
-        <img v-lazy="userDetail.backUrl" alt="" class="img-back" width="100%">
+        <img v-lazy="userDetail.backUrl" :loading="this.$store.state.loadingImg" alt="" class="img-back" width="100%">
         <div class="user-detail">
           <div class="user-img">
             <van-image width="90px" :src="userDetail.avatarUrl"/>
@@ -84,23 +83,32 @@ export default {
     };
   },
   created() {
-    getUserDetail(this.$store.state.myID).then(res => {
-      console.log(res)
+    let state = this.$store.state
+    if(!state.userID){
+      this.getDetail(state.myID)
+    }else{
+      this.getDetail(state.userID)
+    }
 
-      this.userDetail.backUrl = res.profile.backgroundUrl
-      this.userDetail.name = res.profile.nickname
-      this.userDetail.id = res.profile.userId
-      this.userDetail.level = res.level
-      this.userDetail.avatarUrl = res.profile.avatarUrl
-      this.userDetail.signature = res.profile.signature
-      this.userDetail.followeds = res.profile.followeds
-      this.userDetail.follows = res.profile.follows
-      this.userDetail.follows = res.profile.follows
-      console.log(this.userDetail.id)
-
-    })
   },
   methods: {
+    getDetail(id) {
+      getUserDetail(id).then(res => {
+        console.log(res)
+
+        this.userDetail.backUrl = res.profile.backgroundUrl
+        this.userDetail.name = res.profile.nickname
+        this.userDetail.id = res.profile.userId
+        this.userDetail.level = res.level
+        this.userDetail.avatarUrl = res.profile.avatarUrl
+        this.userDetail.signature = res.profile.signature
+        this.userDetail.followeds = res.profile.followeds
+        this.userDetail.follows = res.profile.follows
+        this.userDetail.follows = res.profile.follows
+        console.log(this.userDetail.id)
+
+      })
+    },
     onClickLeft() {
       this.$store.state.isBar = true
       this.$store.state.isMusic = true
@@ -129,7 +137,6 @@ export default {
     },
     //显示听歌排行
     showSongRanking() {
-      console.log('111')
       this.$router.push({
         name: 'listenSong',
         params: {

@@ -8,7 +8,7 @@
     <router-view v-if="!$route.meta.keepAlive"/>
     <music-bottom-bar v-if="$store.state.isMusic"></music-bottom-bar>
 
-    <div class="start-page" v-if="isStart"></div>
+    <div class="start-page" v-if="isStart" v-lazy:background-image="img"></div>
   </div>
 </template>
 
@@ -27,20 +27,12 @@ export default {
   data() {
     return {
       active: 0,
-      isStart: true
+      isStart: true,
+      img: 'https://p.pstatp.com/origin/1385300001951ba6a91a2'
     }
   },
   created() {
-    getLoginState().then(res => {
-      console.log(res)
-      if (res.code === 200) {
-        console.log(res)
-        this.$store.state.isLogin = true
-        this.$store.state.myID = res.profile.userId
-      } else {
-        this.$store.state.isLogin = false
-      }
-    })
+    this.getID()
     setTimeout(() => {
       this.isStart = false
     }, 4000)
@@ -49,11 +41,25 @@ export default {
     myClick() {
       // this.$store.state.isBar = false
       // this.$store.state.isMusic = false
+      this.getID()
       if (this.$store.state.isLogin) {
         this.$router.push('/my')
       } else {
         this.$router.push('/login')
       }
+    },
+    getID() {
+      getLoginState().then(res => {
+        console.log(res)
+        this.$store.state.userID = 0
+        if (res.code === 200) {
+          console.log(res)
+          this.$store.state.isLogin = true
+          this.$store.state.myID = res.profile.userId
+        } else {
+          this.$store.state.isLogin = false
+        }
+      })
     }
   }
 
@@ -70,7 +76,6 @@ export default {
   z-index: 999999;
   width: 100vw;
   height: 100vh;
-  background-image: url("https://p.pstatp.com/origin/1385300001951ba6a91a2");
   background-size: 100%;
   background-position: center;
   animation: start 4s cubic-bezier(.31, .93, .49, .96);

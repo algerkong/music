@@ -2,7 +2,7 @@
   <div>
     <van-popup
         class="music-page"
-        v-model="$store.state.isShow"
+        v-model="show"
         duration="0.2"
         position="bottom"
         :style="{ height: '100%' }"
@@ -109,7 +109,8 @@ export default {
       musicTimeArray: [],
       isText: false,
       isHistory: false,
-      count: 0
+      count: 0,
+      show:true
     }
   },
   created() {

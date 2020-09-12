@@ -2,7 +2,8 @@
   <div class="item-page">
     <div class="click-item" @click="itemClick">
       <div class="img-page">
-        <van-image width="55" height="55" :src="songDetail.songImg"/>
+<!--        <van-image width="55" height="55" :src="songDetail.songImg"/>-->
+        <img v-lazy="songDetail.songImg" alt="" width="55" height="55">
       </div>
       <div class="song-detail">
         <div class="song-name">
@@ -100,6 +101,11 @@ export default {
 </script>
 
 <style scoped>
+
+img{
+  display: block;
+}
+
 .item-page {
   box-sizing: border-box;
   display: flex;

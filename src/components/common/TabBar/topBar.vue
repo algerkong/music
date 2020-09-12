@@ -93,7 +93,6 @@ export default {
   height: 70px;
   z-index: 1000;
   color: #ffffff;
-  transition: .5s;
   background: #31313100;
   background-size: 100%;
   background-position: center;

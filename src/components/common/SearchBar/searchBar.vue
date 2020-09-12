@@ -48,10 +48,11 @@ export default {
     };
   },
   created() {
-    getUserDetail(this.$store.state.myID).then(res => {
-      this.imgUrl = res.profile.avatarUrl
-
-    })
+    setTimeout(() => {
+      getUserDetail(this.$store.state.myID).then(res => {
+        this.imgUrl = res.profile.avatarUrl
+      })
+    },1000)
   },
   methods: {
     onSearch(val) {
@@ -65,8 +66,8 @@ export default {
     myClick() {
       this.$emit('my-click')
     },
-    showSet(){
-       this.$router.push('/set')
+    showSet() {
+      this.$router.push('/set')
     }
   },
 }

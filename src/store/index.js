@@ -21,7 +21,8 @@ const state = {
   allTime: '',             //总秒数
   homeCount: 0,           //首页为第几页
   search: '',              //搜索的字符
-  myID: 498033815,          //登录用户ID
+  myID: 0,          //登录用户ID
+  userID:0,                 //用户ID
   listID:0,                 //歌单ID
   
   audio: '',               //播放器
@@ -30,6 +31,7 @@ const state = {
   isLogin: false,          //是否登录
   isMusic: false,           //是否显示底部音乐
   isSearchPop: false,      //是否显示搜索
+  
 }
 
 const store = new Vuex.Store({
