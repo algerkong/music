@@ -1,12 +1,5 @@
 import {request} from "./request";
 
-// export function getHomeData(){
-//   return request({
-//     // url: '/personalized/newsong'
-//     url: '/search?keywords=爱'
-//   })
-// }
-
 //首页入口图片
 export function getBall(){
   return request({

@@ -28,7 +28,7 @@
                         @his-item-click="historyClick"/>
         <!--    <song-list :songs="songs" v-if="isList"/>-->
         <hot-search v-show="!isList||!value" @hot-click="hotClick"/>
-        <detail-search :res="value" :key="value" v-if="isList"/>
+        <detail-search :res="value" :key="value" v-if="isList" />
         <!--      <item-search v-if="isList" :song="songs"/>-->
       </div>
     </van-popup>
@@ -100,15 +100,6 @@ export default {
     },
     onCancel() {
       this.isList = false
-    },
-    onList(val) {
-      getSearch(val, 1018).then(res => {
-        console.log(res)
-        this.songs = res.result.song.songs
-        if (this.songs) {
-          this.isList = true
-        }
-      })
     },
     hotClick(item) {
       this.value = item

@@ -1,12 +1,14 @@
 import {request} from "./request";
 
 //综合搜索
-export function getSearch(keywords,type){
+export function getSearch(keywords,type,limit,offset){
   return request({
     url: '/search',
     params: {
       keywords,
-      type
+      type,
+      limit,
+      offset
     }
   })
 }

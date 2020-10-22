@@ -2,17 +2,18 @@
   <div class="singer-page">
     <van-popup
         class="mv-page"
-        v-model="$store.state.isShow"
+        v-model="show"
         duration="0.2"
         position="bottom"
         :style="{ height: '100%' }"
     >
       <top-bar :title="name"/>
-      <van-image
-          fit="contain"
-          :src="imgUrl"
-          class="img-color"
-      />
+      <img v-lazy="imgUrl" class="img-color" alt="" width="100%" preload="300px">
+<!--      <van-image-->
+<!--          fit="contain"-->
+<!--          :src="imgUrl"-->
+<!--          class="img-color"-->
+<!--      />-->
       <singer-bar/>
       <van-form class="top-content">
         <div>{{ briefDesc }}</div>
@@ -36,7 +37,8 @@ export default {
     return {
       name: '',
       briefDesc: '',
-      imgUrl: ''
+      imgUrl: '',
+      show:true,
     }
   },
   created() {

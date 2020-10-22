@@ -82,7 +82,7 @@ export default {
       activeNames: ['0'],
       loading: false,
       finished: false,
-      page: 0,
+      page: 1,
       comments: [],
       allCommentCount: '',
       mvSrc: '',
@@ -141,21 +141,20 @@ export default {
       this.$router.push('/singer')
     },
     onLoad() {
-      getMvComments(this.mvID, 30, this.page).then(res => {
+      getMvComments(this.mvID, 30, this.page*30).then(res => {
         console.log(res)
-        if(!this.page){
-          this.comments.push.apply(this.comments, res.hotComments)
-        }
+
         this.comments.push.apply(this.comments, res.comments)
         console.log(this.comments)
         this.allCommentCount = res.total
 
         this.loading = false;
+        this.page++
 
         if (this.comments.length >= this.allCommentCount) {
           this.finished = true;
         }
-        this.page++
+
       })
 
     },

@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <search-bar @my-click="myClick"/>
+    <search-bar @my-click="myClick" />
     <!--    <tab-bar v-if="$store.state.isBar"></tab-bar>-->
     <keep-alive>
-      <router-view v-if="$route.meta.keepAlive"/>
+      <router-view v-if="$route.meta.keepAlive" />
     </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive"/>
+    <router-view v-if="!$route.meta.keepAlive" />
     <music-bottom-bar v-if="$store.state.isMusic"></music-bottom-bar>
 
     <div class="start-page" v-if="isStart" v-lazy:background-image="img"></div>
@@ -13,57 +13,55 @@
 </template>
 
 <script>
-
 import TabBar from "components/common/TabBar/tabBar";
 import MusicBottomBar from "./components/common/TabBar/musicBottomBar";
 import SearchBar from "./components/common/SearchBar/searchBar";
 import Music from "./views/music/music";
 
-import {getLoginState} from "./network/my";
+import { getLoginState } from "./network/my";
 
 export default {
-  name: 'App',
-  components: {Music, SearchBar, MusicBottomBar, TabBar},
+  name: "App",
+  components: { Music, SearchBar, MusicBottomBar, TabBar },
   data() {
     return {
       active: 0,
       isStart: true,
-      img: 'https://p.pstatp.com/origin/1385300001951ba6a91a2'
-    }
+      img: "./assets/img/start.png",
+    };
   },
   created() {
-    this.getID()
+    this.getID();
     setTimeout(() => {
-      this.isStart = false
-    }, 4000)
+      this.isStart = false;
+    }, 4000);
   },
   methods: {
     myClick() {
       // this.$store.state.isBar = false
       // this.$store.state.isMusic = false
-      this.getID()
+      this.getID();
       if (this.$store.state.isLogin) {
-        this.$router.push('/my')
+        this.$router.push("/my");
       } else {
-        this.$router.push('/login')
+        this.$router.push("/login");
       }
     },
     getID() {
-      getLoginState().then(res => {
-        console.log(res)
-        this.$store.state.userID = 0
+      getLoginState().then((res) => {
+        console.log(res);
+        this.$store.state.userID = 0;
         if (res.code === 200) {
-          console.log(res)
-          this.$store.state.isLogin = true
-          this.$store.state.myID = res.profile.userId
+          console.log(res);
+          this.$store.state.isLogin = true;
+          this.$store.state.myID = res.profile.userId;
         } else {
-          this.$store.state.isLogin = false
+          this.$store.state.isLogin = false;
         }
-      })
-    }
-  }
-
-}
+      });
+    },
+  },
+};
 </script>
 
 <style>
@@ -78,7 +76,7 @@ export default {
   height: 100vh;
   background-size: 100%;
   background-position: center;
-  animation: start 4s cubic-bezier(.31, .93, .49, .96);
+  animation: start 4s cubic-bezier(0.31, 0.93, 0.49, 0.96);
   opacity: 0;
 }
 

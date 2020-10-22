@@ -93,17 +93,16 @@ export default {
     },
     onLoad() {
       // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
       getList(30, this.title, 30 * this.count).then(res => {
         console.log(res)
         //加载数据
-        this.list[Number(this.active)].push.apply(this.list[Number(this.active)], res.playlists)
+        this.list[this.active].push.apply(this.list[this.active], res.playlists)
         // 加载状态结束
         this.loading = false;
         this.count++
 
         // 数据全部加载完成
-        if (this.list.length >= 30 * this.list.length) {
+        if (this.list[this.active].length >= res.total) {
           this.finished = true;
 
         }

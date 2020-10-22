@@ -3,7 +3,7 @@
     <van-popup
         class="music-page"
         v-model="show"
-        duration="0.2"
+        duration="0.3"
         position="bottom"
         :style="{ height: '100%' }"
     >

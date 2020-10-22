@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       musicSrc: this.$store.state.musicSrc,
-      page: 0,
+      page: 1,
       comments: [],
       loading: false,
       finished: false,
@@ -71,22 +71,19 @@ export default {
     },
     onLoad() {
       const state = this.$store.state
-      getSongComments(state.musicSrc.id, 30, this.page).then(res => {
+      getSongComments(state.musicSrc.id, 20, this.page*30).then(res => {
         console.log(res)
-        if (!this.page) {
-          this.comments.push.apply(this.comments, res.hotComments)
-        }
         this.comments.push.apply(this.comments, res.comments)
         console.log(this.comments)
         this.allCommentCount = res.total
 
         this.loading = false;
-
-        if (this.comments.length >= this.allCommentCount) {
+        this.page++
+        if (this.comments.length >= 30*this.comments.length) {
           this.finished = true;
         }
       })
-      this.page++
+
     },
 
 
