@@ -1,21 +1,25 @@
 <template>
   <div class="song-page">
-    <van-swipe :loop="false" :width="350" :show-indicators="false">
-      <van-swipe-item v-for="(item, index) in list" :key="index" >
+    <van-swipe :loop="false" class="swipe-song" :show-indicators="false">
+      <van-swipe-item v-for="(item, index) in list" :key="index">
         <div>
           <div v-for="song in item.resources" @click="itemClick(song)" class="item-page">
             <div class="img-page">
-              <van-image :src="song.uiElement.image.imageUrl" width="55" height="55"/>
+              <van-image class="img" :src="song.uiElement.image.imageUrl+'?param=120y120'" />
             </div>
             <div class="song-title">
-              <p>
+              <p class="van-ellipsis">
                 {{ song.uiElement.mainTitle.title }}
-                <span class="author" v-if="song.resourceExtInfo"> - {{ song.resourceExtInfo.artists[0].name }}</span>
+
               </p>
-              <!--              <p>{{ song.uiElement.subTitle.title}}</p>-->
+              <p class="van-ellipsis">
+                <span class="author" v-if="song.resourceExtInfo">
+                  {{ song.resourceExtInfo.artists[0].name }}
+                </span>
+              </p>
             </div>
             <div class="play-icon">
-              <van-icon name="play-circle-o" color="rgb(238, 10, 36)" size="25px"/>
+              <van-icon name="play-circle-o" color="rgb(238, 10, 36)" />
             </div>
           </div>
         </div>
@@ -89,10 +93,13 @@ export default {
 .song-title {
   padding: 0 10px;
   flex: 1;
+  overflow: hidden;
+  font-size: 18px;
 }
 
-.play-icon{
+.play-icon {
   width: 40px;
+  font-size: 25px;
 }
 
 .item-page {
@@ -100,11 +107,21 @@ export default {
   align-items: center;
   padding: 5px 0;
 }
-.img-page{
+
+.img-page > .img {
   overflow: hidden;
   border-radius: 5px;
+  width: 55px;
+  height: 55px;
 }
-.van-swipe__indicators{
+
+.van-swipe__indicators {
   display: none !important;
 }
+
+.swipe-song
+{
+  width: 350px;
+}
+
 </style>

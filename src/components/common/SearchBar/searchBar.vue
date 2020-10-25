@@ -12,8 +12,7 @@
         <template #left>
           <div class="img-page" @click="myClick">
             <van-image
-                width="33px"
-                height="33px"
+                class="img"
                 round
                 fit="cover"
                 :src="imgUrl"
@@ -23,7 +22,6 @@
         <template #action>
           <div class="set-page" @click="showSet">
             <van-icon
-                size="25px"
                 color="#a39b9b"
                 name="setting-o"/>
           </div>
@@ -100,10 +98,16 @@ export default {
   justify-content: center;
 }
 
+.img{
+  width: 33px;
+  height: 33px;
+}
+
 .set-page {
   display: flex;
   justify-content: center;
   width: 40px;
+  font-size: 25px;
 }
 
 .van-image--round {

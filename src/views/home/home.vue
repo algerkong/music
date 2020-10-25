@@ -14,7 +14,7 @@
             indicator-color="rgb(238, 10, 36)"
           >
             <van-swipe-item v-for="(item, index) in banners" :key="index">
-              <van-image :src="item.pic" />
+              <van-image :src="item.pic+'?param=376y146'" />
             </van-swipe-item>
           </van-swipe>
         </div>
@@ -161,6 +161,7 @@ export default {
       });
 
       getBall().then((res) => {
+        console.log(res,'aaaaaa');
         this.homeBall = res.data;
       });
 

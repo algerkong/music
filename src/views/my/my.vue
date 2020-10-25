@@ -4,7 +4,7 @@
         class="music-page"
         v-model="show"
         duration="0.2"
-        position="bottom"
+        position="left"
         :style="{ height: '100%' }"
     >
 
@@ -13,10 +13,10 @@
       </div>
 
       <div class="user-page">
-        <img v-lazy="userDetail.backUrl" :loading="this.$store.state.loadingImg" alt="" class="img-back" width="100%">
+        <img v-lazy="userDetail.backUrl" :loading="this.$store.state.loadingImg" alt="" width="100%" class="img-back">
         <div class="user-detail">
           <div class="user-img">
-            <van-image width="90px" :src="userDetail.avatarUrl"/>
+            <van-image class="img" round :src="userDetail.avatarUrl"/>
           </div>
           <div class="user-name">
             <p>
@@ -44,7 +44,6 @@
         </template>
       </my-bar>
     </van-popup>
-
   </div>
 </template>
 
@@ -53,7 +52,7 @@ import {Toast} from 'vant';
 import {getUserDetail} from "network/my";
 import MyBar from "./childMy/myBar";
 import TopBar from "../../components/common/TabBar/topBar";
-import ItemCent from "../../components/content/itemCent/ItemCent";
+import ItemCent from "../../components/common/item/ItemCent";
 
 export default {
   name: "my",
@@ -82,11 +81,23 @@ export default {
       }
     };
   },
+
+  watch: {
+    $route(to, from) {
+      let state = this.$store.state
+      if (!state.userID) {
+        this.getDetail(state.myID)
+      } else {
+        this.getDetail(state.userID)
+      }
+    }
+  },
+
   created() {
     let state = this.$store.state
-    if(!state.userID){
+    if (!state.userID) {
       this.getDetail(state.myID)
-    }else{
+    } else {
       this.getDetail(state.userID)
     }
 
@@ -177,15 +188,18 @@ export default {
   color: #ffffff;
 }
 
+.img {
+  width: 50px;
+}
+
 .van-image {
   vertical-align: bottom;
 }
 
 .user-img {
   display: inline-block;
-  overflow: hidden;
-  border-radius: 50%;
 }
+
 
 .user-name {
   font-size: 18px;
@@ -203,10 +217,12 @@ export default {
   padding: 5px 0;
   line-height: 25px;
   color: #ffffffc4;
+  font-size: 14px;
 }
 
 .my-detail {
-  border-radius: 10px 10px 0 0;
+  border-radius: 15px 15px 0 0;
   overflow: hidden;
+  width: 100vw;
 }
 </style>

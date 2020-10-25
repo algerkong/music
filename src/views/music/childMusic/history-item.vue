@@ -3,6 +3,9 @@
     <div class="music-name" @click="itemClick">
       <p><span class="name">{{ music.name }}</span><span class="author"> - {{ music.arName }}</span></p>
     </div>
+    <div class="play-icon" >
+      <van-icon name="pause-circle-o" color="#ff0000" v-if="music.id === this.$store.state.musicSrc.id"/>
+    </div>
     <div class="history-icon">
       <van-icon name="like-o"/>
     </div>
@@ -54,15 +57,19 @@ export default {
   flex: 7;
 }
 
-.history-icon {
+.history-icon,.play-icon{
   flex: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  font-size: 20px;
+}
+
+.music-name{
+  font-size: 16px;
 }
 
 .name {
-  font-size: 16px;
   color: #333333;
 }
 

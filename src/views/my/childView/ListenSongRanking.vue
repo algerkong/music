@@ -118,7 +118,7 @@ export default {
   height: 60px;
 }
 .week {
-  padding-top: 70px;
+  padding-top: 50px;
 }
 
 .hot-item {

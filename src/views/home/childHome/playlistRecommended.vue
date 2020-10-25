@@ -1,7 +1,7 @@
 <template>
   <div @click="itemClick">
     <div class="img-page">
-      <van-image :src="img"/>
+      <van-image class="img" :src="img+'?param=300y300'"/>
     </div>
     <div class="title">
       <p>{{ title }}</p>
@@ -47,7 +47,7 @@ export default {
 </script>
 
 <style scoped>
-.img-page{
+.img-page > .img{
   border-radius: 5px;
   overflow: hidden;
 }

@@ -6,7 +6,7 @@
               sticky
               @click="tabClick"
               @scroll="isSticky"
-              offset-top="70px"
+              offset-top="50px"
               title-active-color="#ee0a24"
               title-inactive-color="#333">
 
@@ -60,7 +60,6 @@ export default {
 
 .cent{
   padding: 0 16px;
-  width: 100vw;
 }
 
 /*.tab-page {*/

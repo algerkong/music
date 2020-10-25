@@ -31,7 +31,9 @@ const state = {
   isLogin: false,          //是否登录
   isMusic: false,           //是否显示底部音乐
   isSearchPop: false,      //是否显示搜索
+  isLoop:false,           //是否循环播放
   
+  cookie:'',
 }
 
 const store = new Vuex.Store({

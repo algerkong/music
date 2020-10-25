@@ -1,6 +1,6 @@
 <template>
 
-  <div class="top-bar" >
+  <div class="top-bar">
     <van-nav-bar
         class="music-bar"
         left-arrow
@@ -11,8 +11,8 @@
         <van-icon
             name="arrow-down"
             @click="onClickLeft"
+            class="icon"
             color="#FFF"
-            size="25px"
         />
       </template>
 
@@ -26,8 +26,8 @@
         <van-icon
             name="share"
             @click="onClickRight"
+            class="icon"
             color="#FFF"
-            size="25px"
         />
       </template>
     </van-nav-bar>
@@ -90,7 +90,7 @@ export default {
 .top-bar {
   position: fixed;
   width: 100vw;
-  height: 70px;
+  height: 50px;
   z-index: 1000;
   color: #ffffff;
   background: #31313100;
@@ -98,8 +98,12 @@ export default {
   background-position: center;
 }
 
+.icon{
+  font-size: 20px;
+}
+
 .music-bar {
-  height: 70px;
+  height: 50px;
   background-color: #00000000;
 }
 

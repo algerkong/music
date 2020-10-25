@@ -14,13 +14,13 @@
       </div>
       <div class="describe">
         <div class="img-box">
-          <span class="play-count"><van-icon name="play-circle-o" size="15"/>{{ playCount }}</span>
-          <img v-lazy="img" width="120px" alt="">
+          <span class="play-count"><van-icon name="play-circle-o"/>{{ playCount }}</span>
+          <img class="img" v-lazy="img" alt="">
         </div>
         <div>
           <h2>{{ title }}</h2>
           <div class="author" @click="arShow">
-            <img v-lazy="arImg" alt="" width="25px">
+            <img v-lazy="arImg" alt="">
             <span>{{ arName }}</span>
           </div>
         </div>
@@ -28,7 +28,7 @@
       <div class="song-list">
         <van-form class="list-page">
           <van-cell v-for="(item,index) in song" :key="item.al.name">
-            <div class="hot-item" @click="itemClick(item)">
+            <div class="hot-item" @click="itemClick(item,index)">
               <div class="item-count"><span>{{ index + 1 }}</span></div>
               <div class="item-data">
                 <div class="word">
@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div class="item-score">
-                <van-icon name="play-circle-o" size="25" color="#6f6f6f" v-if="item.mv" @click="showMV(item.mv)"/>
+                <van-icon name="play-circle-o" color="#6f6f6f" v-if="item.mv" @click="showMV(item.mv)"/>
               </div>
             </div>
           </van-cell>
@@ -80,9 +80,25 @@ export default {
       title: '',
       arName: '',
       arImg: '',
-      arID:'',
+      arID: '',
       playCount: '',
 
+    }
+  },
+
+  watch: {
+    $route(to, from) {
+      let id = 0
+      id = this.$store.state.listID
+      getSongList(id).then(res => {
+        this.img = res.playlist.coverImgUrl
+        this.title = res.playlist.name
+        this.arName = res.playlist.creator.nickname
+        this.song = res.playlist.tracks
+        this.playCount = res.playlist.playCount
+        this.arImg = res.playlist.creator.avatarUrl
+        this.arID = res.playlist.creator.userId
+      })
     }
   },
 
@@ -96,7 +112,7 @@ export default {
       this.song = res.playlist.tracks
       this.playCount = res.playlist.playCount
       this.arImg = res.playlist.creator.avatarUrl
-      this.arID =res.playlist.creator.userId
+      this.arID = res.playlist.creator.userId
       console.log(res)
       this.topStyle =
           'background-color:rgba(0, 0, 0, 0.246);' +
@@ -107,13 +123,17 @@ export default {
     })
   },
   methods: {
-    itemClick(item) {
+    itemClick(item, index) {
+
       let state = this.$store.state
+      state.allMusic = [];
+
       getSongUrl(item.id).then(res => {
         console.log(res)
         if (res.data[0].url != null) {
           state.isMusic = true
           state.musicSrc = {
+            count: index,
             id: item.id,
             src: res.data[0].url,
             img: item.al.picUrl,
@@ -123,13 +143,52 @@ export default {
             isPlay: true
           }
           state.arID = item.ar[0].id;
-          state.allMusic.pushNoRepeat(state.musicSrc)
-          console.log(state.allMusic)
+
+          for (let i = 0; i < this.song.length; i++) {
+            getSongUrl(this.song[i].id).then(res => {
+              item = this.song[i];
+              let musicSrc = {
+                count: i,
+                id: item.id,
+                src: res.data[0].url,
+                img: item.al.picUrl,
+                name: item.al.name,
+                arName: item.ar[0].name,
+                arID: item.ar[0].id,
+                isPlay: true
+              }
+              state.allMusic.pushNoRepeat(musicSrc)
+            })
+          }
+
         } else {
           Toast('暂无版权');
         }
-
       })
+
+      // let state = this.$store.state
+      // getSongUrl(item.id).then(res => {
+      //   console.log(res)
+      //   if (res.data[0].url != null) {
+      //     state.isMusic = true
+      //     state.musicSrc = {
+      //       id: item.id,
+      //       src: res.data[0].url,
+      //       img: item.al.picUrl,
+      //       name: item.al.name,
+      //       arName: item.ar[0].name,
+      //       arID: item.ar[0].id,
+      //       isPlay: true
+      //     }
+      //     state.arID = item.ar[0].id;
+      //     state.allMusic.pushNoRepeat(state.musicSrc)
+      //     console.log(state.allMusic)
+      //   } else {
+      //     Toast('暂无版权');
+      //   }
+      //
+      // })
+
     },
     showMV(id) {
       this.$router.push({
@@ -139,7 +198,8 @@ export default {
         }
       })
     },
-    arShow(){
+
+    arShow() {
       this.$store.state.userID = this.arID
       this.$router.push('/my')
     }
@@ -178,15 +238,17 @@ export default {
   padding: 0 16px;
 }
 
-.author{
+.author {
   padding: 10px 0;
   font-size: 14px;
   line-height: 25px;
 }
-.author img{
+
+.author img {
   border-radius: 50%;
   vertical-align: bottom;
   margin-right: 5px;
+  width: 25px;
 }
 
 .img-box {
@@ -205,10 +267,11 @@ export default {
   box-shadow: inset 0 20px 10px 0 #00000036;
 }
 
-.img-box img{
+.img-box img {
   border-radius: 5px;
   vertical-align: bottom;
-  vertical-align: bottom;
+  width: 120px;
+  height: 120px;
 }
 
 span.play-count {
@@ -264,7 +327,7 @@ span.play-count {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: #b3b3b3;
   padding-right: 16px;
@@ -280,6 +343,7 @@ span.play-count {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 25px;
 }
 
 .item-data > .word {

@@ -8,10 +8,10 @@
     >
       <template #left>
         <van-icon
+            class="icon"
             name="arrow-down"
             @click="onClickLeft"
             color="#333"
-            size="25px"
         />
       </template>
 
@@ -21,10 +21,10 @@
 
       <template #right>
         <van-icon
+            class="icon"
             name="share"
             @click="onClickRight"
             color="#333"
-            size="25px"
         />
       </template>
     </van-nav-bar>
@@ -78,13 +78,18 @@ export default {
 </script>
 
 <style scoped>
-.top-bar{
+.top-bar {
   position: fixed;
   width: 100vw;
   height: 60px;
   z-index: 999;
   background-color: #ffffff;
 }
+
+.icon{
+  font-size: 25px;
+}
+
 .music-bar {
   height: 60px;
   background-color: #00000000;

@@ -3,12 +3,11 @@
     <audio ref="audio" class="audio" id="audio" hidden :src="$store.state.musicSrc.src" controls
            autoplay="autoplay"></audio>
     <div class="music-click" @click="musicPop">
-      <div class="music-img">
+      <div >
         <van-image
             round
-            width="35px"
-            height="35px"
-            :src="$store.state.musicSrc.img"
+            class="music-img"
+            :src="$store.state.musicSrc.img+'?param=50y50'"
         />
       </div>
       <div class="music-name">
@@ -16,13 +15,15 @@
       </div>
     </div>
     <div class="music-play" @click="btnClick">
-      <van-icon name="play-circle-o" color="#6f6f6f" size="30px" v-if="!$store.state.musicSrc.isPlay"/>
-      <van-icon name="pause-circle-o" color="#6f6f6f" size="30px" v-if="$store.state.musicSrc.isPlay"/>
+      <van-icon name="play-circle-o" color="#6f6f6f" v-if="!$store.state.musicSrc.isPlay"/>
+      <van-icon name="pause-circle-o" color="#6f6f6f" v-if="$store.state.musicSrc.isPlay"/>
     </div>
   </div>
 </template>
 
 <script>
+import {Toast} from "vant";
+
 export default {
   name: "musicPlay",
   data() {
@@ -35,11 +36,19 @@ export default {
       this.onAudio()
     },
     '$store.state.musicSrc.isPlay': function () {
+      console.log(this.$store.state.musicSrc.isPlay)
+
       let audio = this.$refs.audio
       this.onAudio()
       if (this.$store.state.musicSrc.isPlay) {
         audio.play()
       } else {
+        // if(this.$store.state.isLoop){
+        //   this.onAudio()
+        //   audio.play();
+        // }else{
+        //   audio.pause();
+        // }
         audio.pause();
       }
     },
@@ -62,7 +71,7 @@ export default {
       this.$router.push('/music')
     },
     btnClick() {
-      this.onAudio();
+      // this.onAudio();
       console.log(this.$store.state.musicSrc.isPlay);
       let audio = this.$refs.audio
 
@@ -105,15 +114,30 @@ export default {
               seconds = "0" + seconds;
             }
             state.realMusicTime = minutes + ":" + seconds + "." + audio.currentTime.toString().replace(/\d+\.(\d*)/, "$1");//将实时时间存储到vuex中
-            if (audio.currentTime === audio.duration) {
-              state.musicSrc.isPlay = false
+
+            state.allTime = audio.duration
+
+            //判断是否播放完成
+            if (audio.currentTime >= audio.duration) {
+
+              if (!state.isLoop) {
+                //判断当前歌曲是否为最后一首
+                state.musicSrc.isPlay = false
+                if (state.musicSrc.count < state.allMusic.length - 1) {
+                  state.musicSrc = state.allMusic[state.musicSrc.count / 1 + 1]
+                } else {
+                  Toast("已经是最后一首了");
+                }
+              }else{
+                audio.play();
+              }
             }
           }, false);
         } catch (err) {
-
         }
+
       }
-      state.allTime = audio.duration
+
     }
   }
 }
@@ -132,6 +156,10 @@ export default {
   padding: 0 16px;
 }
 
+.music-img{
+  width: 35px;
+  height: 35px;
+}
 .music-click {
   display: flex;
   align-items: center;
@@ -142,6 +170,10 @@ export default {
   flex: 1;
   color: #333333;
   padding-left: 10px;
+  font-size: 16px;
 }
 
+.music-play{
+  font-size: 30px;
+}
 </style>

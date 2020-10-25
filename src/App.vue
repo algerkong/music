@@ -2,13 +2,16 @@
   <div id="app">
     <search-bar @my-click="myClick" />
     <!--    <tab-bar v-if="$store.state.isBar"></tab-bar>-->
+<!--    <keep-alive>-->
+<!--      <router-view v-if="$route.meta.keepAlive" />-->
+<!--    </keep-alive>-->
+<!--    <router-view v-if="!$route.meta.keepAlive" />-->
     <keep-alive>
-      <router-view v-if="$route.meta.keepAlive" />
+      <router-view/>
     </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive" />
     <music-bottom-bar v-if="$store.state.isMusic"></music-bottom-bar>
 
-    <div class="start-page" v-if="isStart" v-lazy:background-image="img"></div>
+    <div class="start-page" v-show="isStart" v-lazy:background-image="img"></div>
   </div>
 </template>
 
@@ -27,7 +30,7 @@ export default {
     return {
       active: 0,
       isStart: true,
-      img: "./assets/img/start.png",
+      img: "assets/img/start.png",
     };
   },
   created() {

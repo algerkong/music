@@ -16,7 +16,7 @@ export function getLogin(login){
 export function logOut(){
   return request({
     url: '/logout',
-    withCredentials: true, //关键  跨域请求
+    xhrFields: { withCredentials: true }
   })
 }
 
@@ -31,6 +31,7 @@ export function getLoginState(uid){
 export function getUserDetail(uid){
   return request({
     url:'/user/detail',
+    xhrFields: { withCredentials: true },
     params:{
       uid
     }

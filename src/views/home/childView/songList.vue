@@ -9,7 +9,7 @@
       <top-bar class="top-bar" title="歌单广场" style="background-color: #ff0000"/>
       <div class="content"></div>
 
-      <van-tabs v-model="active" swipeable @change="changeTags" class="tag-tabs" sticky offset-top="70px">
+      <van-tabs v-model="active" swipeable @change="changeTags" class="tag-tabs" sticky offset-top="50px">
         <van-tab :title="'全部'">
             <van-list
                 v-model="loading"
@@ -22,7 +22,7 @@
                   <span class="play-count"><van-icon name="play-circle-o" size="15"/>{{ item.playCount }}</span>
                   <!--              <van-image class="list-img" width="100%" :src="item.coverImgUrl"/>-->
                   <img v-lazy="item.coverImgUrl" class="list-img" width="100%" alt="">
-                  <p>{{ item.name }}</p>
+                  <p class="van-multi-ellipsis--l2">{{ item.name }}</p>
                 </div>
               </div>
             </van-list>
@@ -40,7 +40,7 @@
                 <span class="play-count"><van-icon name="play-circle-o" size="15"/>{{ item.playCount }}</span>
                 <!--              <van-image class="list-img" width="100%" :src="item.coverImgUrl"/>-->
                 <img v-lazy="item.coverImgUrl" class="list-img" width="100%" alt="">
-                <p>{{ item.name }}</p>
+                <p class="van-multi-ellipsis--l2">{{ item.name }}</p>
               </div>
             </div>
           </van-list>
@@ -123,7 +123,7 @@ export default {
 
 .content {
   width: 100%;
-  height: 70px;
+  height: 50px;
 }
 
 .list {
@@ -174,13 +174,7 @@ span.play-count {
 
 .list-item p {
   text-align: left;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
   font-size: 14px;
-  height: 31px;
-  display: block;
 }
 
 .list-page {

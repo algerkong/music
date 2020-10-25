@@ -23,12 +23,13 @@
 
 <script>
 import {getRecommendSongs} from "network/song";
-import ItemSearch from "../../search/childSearch/itemSearch";
+
 import TopBar from "../../../components/common/TabBar/topBar";
+import ItemSearch from "item/itemSearch";
 
 export default {
   name: "recommendSongs",
-  components: {TopBar, ItemSearch},
+  components: {ItemSearch, TopBar},
   data() {
     return {
       songs: [],

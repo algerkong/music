@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="main">
     <van-popup
         class="music-page"
         v-model="$store.state.isShow"
         duration="0.2"
-        position="bottom"
-        :style="{ height: '100%' }"
+        position="left"
+        :style="{ height: '100%',width:'100%'}"
     >
       <van-nav-bar
           title="登录账号"
@@ -50,7 +50,7 @@ export default {
     return {
       username: '',
       password: '',
-      message:''
+      message: ''
     };
   },
   methods: {
@@ -62,17 +62,28 @@ export default {
       if (this.username !== '' && this.password !== '') {
         getLogin(values).then(res => {
           if (res.code === 200) {
+            let data = res.data;
             Toast('登录成功')
             this.$store.state.isLogin = true
             this.$store.state.isBar = true
             this.$store.state.isMusic = true
             this.$store.state.myID = res.account.id
             this.$router.back()
+
+            let info = {
+              flag: true,
+              userid: data.account.id,
+              token: data.token,
+              cookie: data.cookie
+            };
+            sessionStorage.setItem("state", JSON.stringify(info));
+            this.$store.commit("setAccessToken", info);
+            console.log(this.$store)
             console.log(res)
-          } else if(res.code === 400) {
+          } else if (res.code === 400) {
             this.message = res.msg
             Toast(this.message)
-          }else{
+          } else {
             Toast("账号不存在")
           }
         })
@@ -88,6 +99,11 @@ export default {
 /*.login-page{*/
 /*  margin: 100px 0;*/
 /*}*/
+
+.main {
+  width: 100vw;
+}
+
 .text-tel, .text-pas {
   border-radius: 50px;
   background: #f3f3f3;
