@@ -11,7 +11,7 @@
     </keep-alive>
     <music-bottom-bar v-if="$store.state.isMusic"></music-bottom-bar>
 
-    <div class="start-page" v-show="isStart" v-lazy:background-image="img"></div>
+    <div class="start-page" v-show="isStart" ></div>
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     return {
       active: 0,
       isStart: true,
-      img: "assets/img/start.png",
+      img: "./assets/img/start.png",
     };
   },
   created() {
@@ -77,6 +77,7 @@ export default {
   z-index: 999999;
   width: 100vw;
   height: 100vh;
+  background-image: url("./assets/img/start.png");
   background-size: 100%;
   background-position: center;
   animation: start 4s cubic-bezier(0.31, 0.93, 0.49, 0.96);
