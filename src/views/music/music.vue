@@ -46,13 +46,13 @@
           </van-form>
         </div>
 
-<!--        <div v-if="!text">-->
-<!--          <div v-for="(item,index) in musicText" :key="index" class="text">-->
-<!--            <p v-if="isTimeText(index-1)"> {{ item }} </p>-->
-<!--            <p v-if="isTimeText(index)"> {{ item }} </p>-->
-<!--            <p v-if="isTimeText(index+1)"> {{ item }} </p>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div v-if="!text">-->
+        <!--          <div v-for="(item,index) in musicText" :key="index" class="text">-->
+        <!--            <p v-if="isTimeText(index-1)"> {{ item }} </p>-->
+        <!--            <p v-if="isTimeText(index)"> {{ item }} </p>-->
+        <!--            <p v-if="isTimeText(index+1)"> {{ item }} </p>-->
+        <!--          </div>-->
+        <!--        </div>-->
 
       </div>
 
@@ -100,11 +100,13 @@
           </div>
         </div>
       </div>
+
+      <van-popup class="history-pop" v-model="isHistory" round position="bottom" :style="{ height: '60%' }">
+        <music-history/>
+      </van-popup>
     </van-popup>
 
-    <van-popup class="history-pop" v-model="isHistory" round position="bottom" :style="{ height: '60%' }">
-      <music-history/>
-    </van-popup>
+
   </div>
 </template>
 

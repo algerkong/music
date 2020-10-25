@@ -2,7 +2,7 @@
   <div class="main">
     <van-popup
         class="music-page"
-        v-model="$store.state.isShow"
+        v-model="show"
         duration="0.2"
         position="left"
         :style="{ height: '100%',width:'100%'}"
@@ -50,7 +50,8 @@ export default {
     return {
       username: '',
       password: '',
-      message: ''
+      message: '',
+      show:true
     };
   },
   methods: {
@@ -59,27 +60,20 @@ export default {
       // Toast('返回')
     },
     onSubmit(values) {
+
       if (this.username !== '' && this.password !== '') {
         getLogin(values).then(res => {
           if (res.code === 200) {
-            let data = res.data;
+            let state = this.$store.state;
             Toast('登录成功')
-            this.$store.state.isLogin = true
-            this.$store.state.isBar = true
-            this.$store.state.isMusic = true
-            this.$store.state.myID = res.account.id
+            state.isLogin = true
+            state.isBar = true
+            state.isMusic = true
+            state.myID = res.account.id
+            state.cookie = res.cookie
             this.$router.back()
 
-            let info = {
-              flag: true,
-              userid: data.account.id,
-              token: data.token,
-              cookie: data.cookie
-            };
-            sessionStorage.setItem("state", JSON.stringify(info));
-            this.$store.commit("setAccessToken", info);
-            console.log(this.$store)
-            console.log(res)
+            console.log(state.cookie)
           } else if (res.code === 400) {
             this.message = res.msg
             Toast(this.message)

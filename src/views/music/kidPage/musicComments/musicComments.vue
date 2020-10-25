@@ -2,7 +2,7 @@
   <div>
     <van-popup
         class="comment-page"
-        v-model="$store.state.isShow"
+        v-model="show"
         duration="0.2"
         position="bottom"
         :style="{ height: '100%' }"
@@ -59,7 +59,8 @@ export default {
       comments: [],
       loading: false,
       finished: false,
-      allCommentCount: 0
+      allCommentCount: 0,
+      show:true
     }
   },
   created() {

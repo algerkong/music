@@ -1,9 +1,12 @@
 import {request} from "./request";
 
 //首页入口图片
-export function getBall(){
+export function getBall(cookie){
   return request({
-    url: '/homepage/dragon/ball'
+    url: '/homepage/dragon/ball',
+    params: {
+      cookie
+    }
   })
 }
 

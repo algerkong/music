@@ -4,7 +4,7 @@
       <p>最近播放</p>
     </div>
     <van-form>
-      <div v-for="item in $store.state.allMusic.reverse()">
+      <div v-for="(item,index) in $store.state.allMusic" :key="index">
         <history-item :music="item"/>
       </div>
     </van-form>
@@ -23,7 +23,7 @@ export default {
 <style scoped>
 .history-title {
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
   padding: 15px;
 }
 </style>

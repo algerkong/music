@@ -90,7 +90,7 @@ export default {
     $route(to, from) {
       let id = 0
       id = this.$store.state.listID
-      getSongList(id).then(res => {
+      getSongList(id,this.$store.state.cookie).then(res => {
         this.img = res.playlist.coverImgUrl
         this.title = res.playlist.name
         this.arName = res.playlist.creator.nickname
@@ -98,6 +98,7 @@ export default {
         this.playCount = res.playlist.playCount
         this.arImg = res.playlist.creator.avatarUrl
         this.arID = res.playlist.creator.userId
+        console.log(this.song)
       })
     }
   },

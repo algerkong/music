@@ -146,11 +146,12 @@ export function getListTag() {
 }
 
 // 获取歌单歌曲列表
-export function getSongList(id) {
+export function getSongList(id,cookie) {
   return request({
     url: '/playlist/detail',
     params: {
-      id
+      id,
+      cookie
     }
   })
 }
