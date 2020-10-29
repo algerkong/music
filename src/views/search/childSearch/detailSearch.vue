@@ -34,7 +34,7 @@ import ItemAll from "item/itemAll";
 import AllSearch from "../childItem/allSearch";
 export default {
   name: "detailSearch",
-  components: { AllSearch, ItemAll},
+  components: { AllSearch, ItemAll },
   data() {
     return {
       list: [[], [], [], [], [], [], [], [], []],
