@@ -3,9 +3,9 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const Home = () => import ('../views/home/home')
-const My = () => import ('../views/my/my')
-const listenSong = () => import ('../views/my/childView/ListenSongRanking')
+const Home = () => import('../views/home/home')
+const My = () => import('../views/my/my')
+const listenSong = () => import('../views/my/childView/ListenSongRanking')
 const Music = () => import('../views/music/music')
 const Search = () => import('../views/search/search')
 const Login = () => import('../views/login/login')
@@ -37,7 +37,7 @@ const routes = [
       keepAlive: true
     }
   },
-    {
+  {
     path: '/list',
     component: List,
     meta: {

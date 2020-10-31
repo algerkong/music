@@ -1,23 +1,23 @@
 <template>
   <div>
     <van-popup
-        class="mv-page"
-        v-model="show"
-        duration="0.2"
-        position="bottom"
-        :style="{ height: '100%' }"
+      class="mv-page"
+      v-model="show"
+      duration="0.2"
+      position="bottom"
+      :style="{ height: '100%' }"
     >
-      <top-bar :title="mvName"/>
+      <top-bar :title="mvName" />
       <div class="video-page">
-        <video class="mv-video"
-               controls
-               autoplay
-               :src="mvSrc"
-               :poster="mvBackground"
+        <video
+          class="mv-video"
+          controls
+          autoplay
+          :src="mvSrc"
+          :poster="mvBackground"
         ></video>
       </div>
       <div class="content"></div>
-
 
       <van-form>
         <van-collapse v-model="activeNames">
@@ -26,7 +26,8 @@
               <div class="mv-title">
                 <p>
                   <span class="name">{{ mvName }}</span>
-                  <span @click="showSinger"> - {{ author }}</span></p>
+                  <span @click="showSinger"> - {{ author }}</span>
+                </p>
               </div>
               <div class="mv-count">
                 <span>{{ playCount }}次观看</span>
@@ -40,27 +41,29 @@
           </van-collapse-item>
         </van-collapse>
         <van-grid>
-          <van-grid-item icon="good-job-o" :text="allCommentCount.toString()"/>
-          <van-grid-item icon="star-o" :text="count.subCount.toString()"/>
-          <van-grid-item icon="chat-o" :text="count.commentCount.toString()"/>
-          <van-grid-item icon="share" :text="count.shareCount.toString()"/>
+          <van-grid-item icon="good-job-o" :text="allCommentCount.toString()" />
+          <van-grid-item icon="star-o" :text="count.subCount.toString()" />
+          <van-grid-item icon="chat-o" :text="count.commentCount.toString()" />
+          <van-grid-item icon="share" :text="count.shareCount.toString()" />
         </van-grid>
 
         <div>
-          <van-sticky offset-top="232px">
+          <van-sticky offset-top="245px">
             <div class="title"><p>评论区</p></div>
           </van-sticky>
           <van-list
-              v-model="loading"
-              :finished="finished"
-              finished-text="没有更多了"
-              @load="onLoad"
+            v-model="loading"
+            :finished="finished"
+            finished-text="没有更多了"
+            @load="onLoad"
           >
-            <van-cell v-for="(item,index) in comments" :key="index*(page+1)">
-              <comment-item :comment="item"/>
+            <van-cell
+              v-for="(item, index) in comments"
+              :key="index * (page + 1)"
+            >
+              <comment-item :comment="item" />
             </van-cell>
           </van-list>
-
         </div>
       </van-form>
     </van-popup>
@@ -68,98 +71,111 @@
 </template>
 
 <script>
-import {getMv, getMvDetail, getMvComments} from "network/song";
+import { getMv, getMvDetail, getMvComments } from "network/song";
 import TopBar from "components/common/TabBar/topBar";
 import CommentItem from "components/common/CommontItem/commentItem";
 
 export default {
   name: "mv",
-  components: {CommentItem, TopBar},
+  components: { CommentItem, TopBar },
   data() {
     return {
-      show:true,
-      mvID:'',
-      activeNames: ['0'],
+      show: true,
+      mvID: "",
+      activeNames: ["0"],
       loading: false,
       finished: false,
       page: 1,
       comments: [],
-      allCommentCount: '',
-      mvSrc: '',
-      mvBackground: '',
-      mvName: '',
-      author: '',
-      text: '',
-      playCount: '',
-      arID: '',
-      mvTime: '',
-      desc: '',
+      allCommentCount: "",
+      mvSrc: "",
+      mvBackground: "",
+      mvName: "",
+      author: "",
+      text: "",
+      playCount: "",
+      arID: "",
+      mvTime: "",
+      desc: "",
       count: {
-        subCount: '',
-        commentCount: '',
-        shareCount: '',
-      }
-    }
+        subCount: "",
+        commentCount: "",
+        shareCount: "",
+      },
+    };
   },
-  created() {
-    this.mvID = this.$route.params.id
-    //打开时暂停播放音乐
-    const state = this.$store.state
-    state.musicSrc.isPlay = false
-    //获取mv播放地址
-    getMv(this.mvID).then(res => {
-      console.log(this.mvID)
-      console.log(res)
-      this.mvSrc = res.data.url
-    })
 
-    //获取MV信息
-    getMvDetail(this.mvID).then(res => {
-      console.log(res)
-      this.mvBackground = res.data.cover
-      this.mvName = res.data.name
-      this.author = res.data.artistName
-      this.playCount = res.data.playCount
-      this.text = res.data.briefDesc
-      this.arID = res.data.artistId
-      this.mvTime = res.data.publishTime
-      this.desc = res.data.desc
-      this.count = {
-        subCount: res.data.subCount,
-        commentCount: res.data.commentCount,
-        shareCount: res.data.shareCount,
-      }
-    })
-    setTimeout(() => {
-      console.log(state.isMv)
-    }, 2000)
+  watch: {
+    $route(to, from) {
+      this.comments = [];
+      this.oneLoad();
+      this.onLoad();
+    },
+  },
+
+  created() {
+    this.oneLoad();
+    this.onLoad();
   },
   methods: {
+    oneLoad() {
+      this.mvID = this.$route.params.id;
+      //打开时暂停播放音乐
+      const state = this.$store.state;
+      state.musicSrc.isPlay = false;
+      //获取mv播放地址
+      getMv(this.mvID).then((res) => {
+        console.log(this.mvID);
+        console.log(res);
+        this.mvSrc = res.data.url;
+      });
+
+      this.comments = [];
+
+      //获取MV信息
+      getMvDetail(this.mvID).then((res) => {
+        console.log(res);
+        this.mvBackground = res.data.cover;
+        this.mvName = res.data.name;
+        this.author = res.data.artistName;
+        this.playCount = res.data.playCount;
+        this.text = res.data.briefDesc;
+        this.arID = res.data.artistId;
+        this.mvTime = res.data.publishTime;
+        this.desc = res.data.desc;
+        this.count = {
+          subCount: res.data.subCount,
+          commentCount: res.data.commentCount,
+          shareCount: res.data.shareCount,
+        };
+      });
+      setTimeout(() => {
+        console.log(state.isMv);
+      }, 2000);
+    },
     showSinger() {
-      this.$store.state.arID = this.arID
-      this.$store.state.isSinger = true
-      this.$router.push('/singer')
+      this.$store.state.arID = this.arID;
+      this.$store.state.isSinger = true;
+      this.$router.push("/singer");
     },
     onLoad() {
-      getMvComments(this.mvID, 30, this.page*30).then(res => {
-        console.log(res)
+      getMvComments(this.mvID, 30, this.page * 30).then((res) => {
+        console.log(res);
 
-        this.comments.push.apply(this.comments, res.comments)
-        console.log(this.comments)
-        this.allCommentCount = res.total
+        this.comments.push.apply(this.comments, res.comments);
+        console.log(this.comments);
+        this.allCommentCount = res.total;
 
         this.loading = false;
-        this.page++
+        this.page++;
 
-        if (this.comments.length >= this.allCommentCount) {
+        if (this.comments.length > 30 * this.allCommentCount) {
           this.finished = true;
         }
-
-      })
-
+      });
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
@@ -179,6 +195,7 @@ export default {
   background-color: #ffffff;
   padding: 10px 16px;
   font-weight: 600;
+  font-size: 16px;
 }
 
 .mv-video {

@@ -1,14 +1,17 @@
-import {request} from "./request";
+import { request } from "./request";
 
 //每日推荐
-export function getRecommendSongs() {
+export function getRecommendSongs(cookie) {
   return request({
-    url: '/recommend/songs'
+    url: '/recommend/songs',
+    params: {
+      cookie
+    }
   })
 }
 
 //全部歌单
-export function getList(limit,cat,offset) {
+export function getList(limit, cat, offset) {
   return request({
     url: '/top/playlist',
     params: {
@@ -32,20 +35,20 @@ export function getSongDetail(ids) {
 }
 
 //歌曲播放地址
-export function  getSongUrl(id){
+export function getSongUrl(id) {
   return request({
-    url:'/song/url',
-    params:{
+    url: '/song/url',
+    params: {
       id
     }
   })
 }
 
 //歌曲歌词
-export function getSongText(id){
+export function getSongText(id) {
   return request({
-    url:'/lyric',
-    params:{
+    url: '/lyric',
+    params: {
       id
     }
   })
@@ -62,7 +65,7 @@ export function getIsSong(id) {
 }
 
 //歌曲评论
-export function getSongComments(id,limit,offset) {
+export function getSongComments(id, limit, offset) {
   return request({
     url: '/comment/music',
     params: {
@@ -82,7 +85,7 @@ t : 是否点赞 ,1 为点赞 ,0 为取消点赞
 type: 数字 , 资源类型 , 对应歌曲 , mv, 专辑 , 歌单 , 电台, 视频对应以下类型
 0: 歌曲   1: mv   2: 歌单   3: 专辑   4: 电台   5: 视频   6: 动态
 * */
-export function isGood(id,cid,t,type) {
+export function isGood(id, cid, t, type) {
   return request({
     url: 'comment/like',
     params: {
@@ -95,7 +98,7 @@ export function isGood(id,cid,t,type) {
 }
 
 //歌曲mv信息
-export function getMvDetail(mvid){
+export function getMvDetail(mvid) {
   return request({
     url: '/mv/detail',
     params: {
@@ -105,8 +108,8 @@ export function getMvDetail(mvid){
 }
 
 //mv地址
-export function getMv(id){
-return request({
+export function getMv(id) {
+  return request({
     url: '/mv/url',
     params: {
       id
@@ -115,7 +118,7 @@ return request({
 }
 
 //MV评论
-export function getMvComments(id,limit,offset) {
+export function getMvComments(id, limit, offset) {
   return request({
     url: '/comment/mv',
     params: {
@@ -146,7 +149,7 @@ export function getListTag() {
 }
 
 // 获取歌单歌曲列表
-export function getSongList(id,cookie) {
+export function getSongList(id, cookie) {
   return request({
     url: '/playlist/detail',
     params: {

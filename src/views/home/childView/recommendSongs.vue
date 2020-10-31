@@ -1,20 +1,24 @@
 <template>
   <div class="page">
     <van-popup
-        v-model="show"
-        duration="0.2"
-        position="bottom"
-        :style="{ height: '100%' }"
+      v-model="show"
+      duration="0.2"
+      position="bottom"
+      :style="{ height: '100%' }"
     >
-      <top-bar class="top-bar" title="每日推荐" style="background-color:#ff0000"/>
+      <top-bar
+        class="top-bar"
+        title="每日推荐"
+        style="background-color: #ff0000"
+      />
       <div class="content"></div>
       <div>
-        <img v-lazy="songs[0].al.picUrl"  width="100%" alt="">
-<!--        <van-image :src="songs[0].al.picUrl"/>-->
+        <img v-lazy="songs[0].al.picUrl" width="100%" alt="" />
+        <!--        <van-image :src="songs[0].al.picUrl"/>-->
       </div>
       <div class="song-list">
-        <van-cell v-for="(item,index) in songs" :key="index">
-          <item-search :song="item" v-if="item!=null"/>
+        <van-cell v-for="(item, index) in songs" :key="index">
+          <item-search :song="item" v-if="item != null" />
         </van-cell>
       </div>
     </van-popup>
@@ -22,30 +26,36 @@
 </template>
 
 <script>
-import {getRecommendSongs} from "network/song";
+import { getRecommendSongs } from "network/song";
 
 import TopBar from "../../../components/common/TabBar/topBar";
 import ItemSearch from "item/itemSearch";
 
 export default {
   name: "recommendSongs",
-  components: {ItemSearch, TopBar},
+  components: { ItemSearch, TopBar },
   data() {
     return {
       songs: [],
-      show: true
-    }
+      show: true,
+    };
+  },
+  watch: {
+    $route(to, from) {
+      getRecommendSongs(this.$store.state.cookie).then((res) => {
+        this.songs = res.data.dailySongs;
+      });
+    },
   },
   created() {
-    getRecommendSongs().then(res => {
-      this.songs = res.data.dailySongs
-    })
-  }
-}
+    getRecommendSongs(this.$store.state.cookie).then((res) => {
+      this.songs = res.data.dailySongs;
+    });
+  },
+};
 </script>
 
 <style scoped>
-
 .page {
   position: relative;
   top: 0;
@@ -59,7 +69,7 @@ export default {
 
 .content {
   width: 100%;
-  height: 70px;
+  height: 40px;
 }
 
 .song-list {

@@ -1,11 +1,13 @@
 <template>
   <div>
-    <div class="history-title">
-      <p>最近播放</p>
-    </div>
-    <van-form>
-      <div v-for="(item,index) in $store.state.allMusic" :key="index">
-        <history-item :music="item"/>
+    <van-form ref="con">
+      <van-sticky :container="conn">
+        <div class="history-title">
+          <p>播放列表</p>
+        </div>
+      </van-sticky>
+      <div v-for="(item, index) in $store.state.allMusic" :key="index">
+        <history-item :music="item" />
       </div>
     </van-form>
   </div>
@@ -16,8 +18,16 @@ import HistoryItem from "./history-item";
 
 export default {
   name: "musicHistory",
-  components: {HistoryItem}
-}
+  components: { HistoryItem },
+  data() {
+    return {
+      conn: null,
+    };
+  },
+  mounted() {
+    this.conn = this.$refs.con;
+  },
+};
 </script>
 
 <style scoped>
