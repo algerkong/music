@@ -54,7 +54,7 @@ export default {
       getLoginState().then((res) => {
         console.log(res);
         this.$store.state.userID = 0;
-        if (res.code === 200) {
+        if (res.code == 200) {
           console.log(res);
           this.$store.state.isLogin = true;
           this.$store.state.myID = res.profile.userId;

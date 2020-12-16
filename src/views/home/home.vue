@@ -79,16 +79,6 @@
         <song-recommended :list="newSongList" />
       </div>
 
-      <!--    大家都在听-->
-      <div v-if="everyonePlayList">
-        <div class="list-top">
-          <div class="play-list-title">
-            {{ everyonePlayTitle }}
-          </div>
-          <div class="btn-more" @click="ballClick(1)">查看更多</div>
-        </div>
-        <song-recommended :list="everyonePlayList" />
-      </div>
     </van-pull-refresh>
   </div>
 </template>
@@ -129,9 +119,7 @@ export default {
       scenarioTitle: "",
       scenarioList: [],
       newSongTitle: "",
-      newSongList: [],
-      everyonePlayTitle: "",
-      everyonePlayList: [],
+      newSongList: []
     };
   },
   created() {
@@ -166,28 +154,25 @@ export default {
 
       getHomeData().then((res) => {
         //推荐歌单
-        this.homePlaylist = res.data.blocks[0].creatives;
-        this.playlistTitle = res.data.blocks[0].uiElement.subTitle.title;
+        this.homePlaylist = res.data.blocks[1].creatives;
+        this.playlistTitle = res.data.blocks[1].uiElement.subTitle.title;
         //推荐多栏音乐
-        this.homeSongsList = res.data.blocks[1].creatives;
-        this.songsListTitle = res.data.blocks[1].uiElement.subTitle.title;
+        this.homeSongsList = res.data.blocks[2].creatives;
+        this.songsListTitle = res.data.blocks[2].uiElement.subTitle.title;
         //根据时间类型推荐歌单
-        this.scenarioList = res.data.blocks[2].creatives;
-        this.scenarioTitle = res.data.blocks[2].uiElement.subTitle.title;
+        this.scenarioList = res.data.blocks[4].creatives;
+        this.scenarioTitle = res.data.blocks[4].uiElement.subTitle.title;
         //新歌推荐多栏音乐
         this.newSongList = res.data.blocks[5].creatives;
         this.newSongTitle = res.data.blocks[5].uiElement.mainTitle.title;
-        //大家都在听
-        this.everyonePlayList = res.data.blocks[6].creatives;
-        this.everyonePlayTitle = res.data.blocks[6].uiElement.subTitle.title;
-        console.log(this.homeSongsList);
+
         this.isLoading = false;
       });
 
       getLoginState().then((res) => {
         console.log(res);
         this.$store.state.userID = 0;
-        if (res.code === 200) {
+        if (res.code == 200) {
           console.log(res);
           this.$store.state.isLogin = true;
           this.$store.state.myID = res.profile.userId;

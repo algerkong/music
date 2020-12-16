@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import {getSongList} from "network/song";
+import {getSongList, getSongDetail} from "network/song";
 import TopBar from "../../components/common/TabBar/topBar";
 import {getSongUrl} from "../../network/song";
 import {Toast} from "vant";
@@ -88,9 +88,18 @@ export default {
 
   watch: {
     $route(to, from) {
+      this.getList()
+    }
+  },
+
+  created() {
+    this.getList()
+  },
+  methods: {
+    getList() {
       let id = 0
       id = this.$store.state.listID
-      getSongList(id,this.$store.state.cookie).then(res => {
+      getSongList(id).then(res => {
         this.img = res.playlist.coverImgUrl
         this.title = res.playlist.name
         this.arName = res.playlist.creator.nickname
@@ -98,32 +107,34 @@ export default {
         this.playCount = res.playlist.playCount
         this.arImg = res.playlist.creator.avatarUrl
         this.arID = res.playlist.creator.userId
-        console.log(this.song)
-      })
-    }
-  },
 
-  created() {
-    let id = 0
-    id = this.$store.state.listID
-    getSongList(id).then(res => {
-      this.img = res.playlist.coverImgUrl
-      this.title = res.playlist.name
-      this.arName = res.playlist.creator.nickname
-      this.song = res.playlist.tracks
-      this.playCount = res.playlist.playCount
-      this.arImg = res.playlist.creator.avatarUrl
-      this.arID = res.playlist.creator.userId
-      console.log(res)
-      this.topStyle =
-          'background-color:rgba(0, 0, 0, 0.246);' +
-          'background-size:100%;' +
-          'background-position:top;' +
-          'backdrop-filter: brightness(80%);' +
-          'backdrop-filter: blur(15px);'
-    })
-  },
-  methods: {
+        console.log(this.getListDetails(res.playlist.trackIds))
+
+        console.log(res)
+        this.topStyle =
+            'background-color:rgba(0, 0, 0, 0.246);' +
+            'background-size:100%;' +
+            'background-position:top;' +
+            'backdrop-filter: brightness(80%);' +
+            'backdrop-filter: blur(15px);'
+      })
+
+    },
+    getListDetails(trackIds) {
+      let ids = ""
+      for (let i =0; i<trackIds.length; i++) {
+        if(i<trackIds.length-1){
+          ids += trackIds[i].id + ','
+        }else{
+          ids += trackIds[i].id
+        }
+      }
+      console.log(ids)
+      getSongDetail(ids).then(res=>{
+        this.song = res.songs
+        console.log(res)
+      })
+    },
     itemClick(item, index) {
 
       let state = this.$store.state
